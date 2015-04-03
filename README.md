@@ -16,3 +16,11 @@ Plan de travail
 
 /////// SOUTENANCE
 Soutenance du 15 au 18 juin : 1 rapport les codes sources présentation 5min, démonstration 5 min
+
+
+/////// LIBS
+
+QT 5
+ToolKit CUDA
+BOOST
+OPENGL
