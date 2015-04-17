@@ -1,0 +1,213 @@
+\chapter{Algorithme métaheuristique}
+\label{chapitre_6}
+
+Le développement de méthodes heuristiques est a priori justifié par la difficulté du problème d'imbrication qui est NP-difficile. Les heuristiques considérées sont trois variantes de recherches locales itératives, opérant sur une solution unique préalablement construite mais non nécessairement admissible, un algorithme évolutionnaire opérant sur une population de solutions et un algorithme mémétique incorporant une recherche locale au sein d'un algorithme évolutionnaire. En définitive seuls la recherche locale \textit{First Improvement} et l'algorithme Mémétique semblent vraiment performant a priori sur un problème quelconque. Nous détaillons cependant les différentes versions.
+
+La recherche locale fonctionne par des mouvements de faible amplitude dans un voisinage de la solution courante. La fonction de voisinage détermine la solution suivante obtenue à partir d'une modification locale de la solution courante. Lorsqu'aucune amélioration de la solution ne peut être obtenue dans le voisinage, la solution en cours est un optimum local relatif à la fonction de voisinage. La réitération de la recherche locale à partir de conditions de départ aléatoires permet de diversifier les zones d'exploration.
+
+L'opérateur de voisinage composite est à la base du principe de la re\-cherche locale. Nous avons retenu trois versions de la re\-cherche locale suivant le mode d'examen du voisinage retenu. La première version est une recherche de type marche aléatoire. Les deux autres versions sont une recherche gloutonne \textit{first improvement search} et une recherche en profondeur \textit{best improvement search}. 
+
+En combinant les mêmes opérateurs de base dans un schéma d'algo\-rithme à base de population, avec des opérateurs de sélection sur les solutions, nous spécifions un algorithme évolutionnaire. Puis, pour tenter de tirer parti des avantages de l'al\-go\-rithme évolutionnaire et de la recherche locale conjointement, nous incluons celle-ci en tant qu'opérateur dans un algorithme évolutionnaire selon le principe d'un algorithme mémétique.
+
+Dans la section \ref{rech_locale_iteree}, sont présentées les recherches locales itérées selon trois versions. L'algorithme évolutionnaire opérant sur une population de solutions, et l'algorithme mémétique, incluant la recherche locale, sont présentés dans la section \ref{algorithme_evolutionnaire}.
+
+\section{Recherche locale itérée}
+\label{rech_locale_iteree}
+
+Les recherches locales combinent les opérateurs de base selon différentes stratégies de recherche. Elles opèrent toutes à partir d'une solution unique préalablement construite et non nécessairement admissible. Elles diffèrent par le mode de parcours d'un voisinage autour de la solution courante. Elles sont réitérées avec des ordonnancements de véhicules modifiés.
+
+\subsection{Boucle externe}
+
+La recherche locale itérée \citep{johnson:97} est l'une des méthodes les plus simples de recherche heuristique appliquées aux problèmes NP-difficiles. La boucle principale de la méthode consiste à réitérer l'exécution de recherches locales simples à partir de conditions initiales aléatoires. Le pseudo-code de la boucle principale est présenté dans l'Algorithme \ref{heur_iter}.
+
+Les opérations sont reparties en deux phases: une phase de construction suivie d'une phase d'amélioration. Dans l'Algorithme \ref{heur_iter}, une tentative de construction suivie d'une tentative d'amélioration sont effectuées par les deux appels \textit{constructSolution} et \textit{improveSolution}. Les détails de ces deux procédures sont donnés respectivement dans les sections \ref{construction_loop} et \ref{local_search_improv}. La construction génère rapidement des solutions partielles non nécessairement admissibles. A partir de la 
+solution obtenue, la procédure d'amélioration applique des modifications locales en vue d'améliorer la solution.
+
+\begin{algorithm}[htp]
+\Sortie{$Best$}
+\Deb{
+	$S \leftarrow initialize()$;~\tcp{initialisation des structures de données}
+	$count \leftarrow 0$\;
+	\Tq{$count < maxCount$}{
+	  $count \leftarrow count + 1$\;
+		$S \leftarrow constructSolution(S)$;~\tcp{construction d'une solution non nécessairement admissible}
+		$S \leftarrow improveSolution(S)$;~\tcp{amélioration de la solution par recherche locale}
+		$Best \leftarrow selectBest(S, Best)$\;
+	}
+	\Retour{$Best$}\;
+}
+\caption{Algorithme de recherche locale itérée}
+\label{heur_iter}
+\end{algorithm}
+
+Dans tous les cas de figure, il convient d'évaluer et de comparer des solutions non nécessairement admissibles. C'est pourquoi, le classement des solutions s'effectue selon la valeur de la fonction objectif agrégative qui inclut le respect des contraintes. Le détail en est donné dans la section de définition du problème. Le classement de deux solutions est effectué par la procédure \textit{selectBest}.  
+
+\subsection{Boucle de construction}
+\label{construction_loop}
+
+La boucle principale de construction \textit{constructSolution} est détaillée dans l'Algorithme \ref{constr_proc}. Son rôle est de générer aussi rapidement que possible de nouvelles solutions candidates, admissibles ou non, de plus ou moins bonne qualité. La procédure répète \textit{maxConstruct} fois un procédé de construction de base. La procédure \textit{selectBest} effectue un classement suivant l'objectif global du problème.
+
+\begin{algorithm}[t]
+\Entree{$S \in$ Solution, $maxConstruct$}
+\Sortie{$Best$}
+\Deb{
+%    $Best \in$ Solution\;
+		$count \leftarrow 0$\;
+		\Tq{$count < maxConstruct$}{
+		  $count \leftarrow count + 1$\;
+		  \tcp{Appliquer une opération de perturbation}
+		  $S \leftarrow perturbationOp(S)$\;
+			\tcp{Construction séquentielle}
+			$S \leftarrow constructSolutionSeq(S)$\;
+			$Best \leftarrow selectBest(S, Best)$\;
+		}
+  	\Retour{$Best$}\;
+}
+\caption{constructSolution}
+\label{constr_proc}
+\end{algorithm}
+
+\subsection{Boucle d'amélioration}
+\label{local_search_improv}
+La génération de nouvelles solutions de départ diversifiées à partir de conditions initiales aléatoires est effectuée par la boucle de construction. À partir de la solution fournie, l'intensification de la recherche est réalisée par la procédure \textit{improveSolution} de l'Algorithme \ref{heur_iter} précédent. Elle permet des mouvements de faible ampleur dans une petite région de l'espace des solutions et tente de transformer des solutions non admissibles en solutions admissibles. Le schéma de base d'une procédure d'amélioration consiste à intégrer un opérateur de voisinage dans une stratégie de recherche. En suivant ce schéma, trois versions de recherche locales sont proposées : une recherche aléatoire simple et deux recherches locales à pivotage.
+
+\subsubsection{Recherche aléatoire}
+La stratégie de recherche définie par l'Algorithme \ref{iter_rand_search} s'inspire du principe de la marche aléatoire. Nous l'avons dénommée recherche aléatoire itérée ou IRS. Elle consiste à faire évoluer une solution courante en effectuant un nombre donné de mouvements successifs dans le voisinage puis à sélec\-tionner la meilleure solution rencontrée lors de cette succession de mouvements. La méthode est très simple car très peu d'opérations de copie de données sont effectuées à chaque pas d'itération.
+
+\begin{algorithm}[b]
+\Entree{$S \in$ Solution, $maxImprove$}
+\Sortie{$Best$}
+\Deb{
+%    $Best \in$ Solution\;
+		$count \leftarrow 0$\;
+		\Tq{$count < maxImprove$}{
+		  $count \leftarrow count + 1$\;
+			$S \leftarrow generateNeighbor(S)$\;
+			$Best \leftarrow selectBest(S, Best)$\;
+		}
+  	\Retour{$Best$}\;
+}
+\caption{iteratedRandomSearch}
+\label{iter_rand_search}
+\end{algorithm}
+\newpage
+
+\subsubsection{Recherche locale}
+
+Dans cette section, nous présentons l'algorithme de recherche locale suivant deux versions. La première est la recherche locale gloutonne, que nous appelons \og recherche locale itérée premier meilleur \fg , ou encore ILS-FI. La seconde est la recherche locale en profondeur, que nous appelons \og recherche locale itérée meilleure amélioration \fg , ou encore ILS-BI. L'Algorithme \ref{local_search} donne le code commun aux deux versions. La différence entre les deux exécutions tient dans la condition d'évaluation de la boucle interne \og tant que \fg. Le code indiqué correspond à la version ILS-FI, retenue en définitive comme solution performante. L'instruction qui teste la détection d'une amélioration, dans la condition, doit être retirée dans le cas ILS-BI. Par rapport à IRS, ILS-FI et ILS-BI comportent chacune deux boucles imbriquées, et non une seule, comme le montre l'Algorithme \ref{local_search}.
+
+\begin{algorithm}[htp]
+\Entree{$S \in$ Solution}
+\Sortie{$Best$}
+\Deb{
+%  $Best, S' \in$ Solution\;
+	$Best \leftarrow S$\;
+  $improvementFound \leftarrow true$\;
+	\Tq{$improvementFound~\tcc*[h]{définit la profondeur}$} {%\tcp{depth of the search}
+ 		$count \leftarrow 0$\;
+	  $improvementFound \leftarrow false$\;
+		\Tq{$count < neighborhoodSize$ {\bf et} $\neg$ improvementFound}{
+		  $count \leftarrow count + 1$\;
+			$S' \leftarrow generateNeighbor(S)~\tcc*[h]{examen du voisin}$\;
+			Si {$isBest(S', Best)$} { 
+					$Best \leftarrow S'$\;
+  				$improvementFound \leftarrow true$\;
+  		}
+		}
+		$S \leftarrow Best$\;
+	}
+	\Retour{$Best$}\;
+}
+\caption{Recherche locale \textit{First Improvement}}
+\label{local_search}
+\end{algorithm}
+
+La boucle externe contrôle la profondeur de la recherche. L'algorithme s'arrête lorsqu'aucune amélioration n'a été trouvée, ce qui correspond à l'atteinte d'un minimum local. La solution courante constitue l'élément pivot autour duquel s'effectue la recherche dans le voisinage. C'est à partir de cet élément que des solutions voisines sont générées et examinées. La boucle interne met en \oe{}uvre la règle de pivotage. Elle détermine la meilleure solution voisine vers laquelle la recherche doit se déplacer. Cette solution devient le nouveau pivot à partir duquel des solutions voisines sont à nouveau générées.
+
+Par rapport à la recherche aléatoire itérée IRS, nous pouvons noter l'ajout d'une variable supplémentaire $S'$ utilisée pour tester la présence d'une amélio\-ration. Dans les deux types de recherche locale ILS-FI et ILS-BI, une variable supplé\-mentaire de mémorisation est donc requise pour tester la possibilité d'amélioration, cela entraîne davantage de copies de données que dans la première méthode de recherche aléatoire itérée IRS.
+
+Dans ILS-FI, la première meilleure solution rencontrée devient le nouvel élément pivot. Dans ILS-BI, c'est la meilleure solution dans un échantillon aléatoire du voisinage qui devient le nouvel élément pivot. La taille de l'échantillon est définie par le paramètre \textit{neighborhoodSize} dans l'Algo\-rithme \ref{local_search}. Dans les expérimentations, la taille de l'échan\-tillon peut varier entre 100 et 1000 unités examinées.
+
+\section{Algorithme évolutionnaire et mémétique}
+\label{algorithme_evolutionnaire}
+
+\subsection{Algorithme}
+
+Suivant la terminologie des algorithmes évolutionnaires, les solutions sont maintenant des \og individus \fg composant une population qui va évoluer de génération en génération de manière à répondre aux exigences du problème. Des opérateurs de variations tels que des mutations vont modifier les individus, ceux-ci étant soumis à une sélection suivant leur adéquation aux objectifs du problème.
+
+Ici, nous spécifions une boucle prin\-cipale type défi\-nissant un algorithme évolutionnaire. Nous pouvons décliner cette boucle principale selon un algorithme évolutionnaire classique, mais notre choix après expérimentation se porte sur un algorithme de type algorithme mémétique. Un algorithme mémétique est une extension d'un algorithme génétique, ou évolutionnaire, dans lequel est ajouté une recherche locale en tant qu'opérateur de modification de solution correspondant à une mutation d'un type particulier \citep{moscato:03}. Nous n'utilisons pas d'opérateur de croisement. Nous utilisons nos méthodes de recherche locale et construction en tant qu'opérateurs de mutation dans la boucle évolutionnaire.
+
+Le pseudo-code de la boucle évolutionnaire type est donné par l'Algo\-rithme \ref{algo_implant}. Deux opérateurs de mutations sont spécifiés. Ceux sont les opé\-rateurs \textit{mutate} et \textit{localSearch}. Deux opérateurs de sélection au niveau de la popu\-lation peuvent être utilisés. Le premier d'entre eux est l'opé\-rateur appelé \textit{select} dans le pseudo-code. Il remplace $Pop/5$ individus de plus faible \textit{fitness} dans la popu\-lation par $Pop/5$ individus de plus grande \textit{fitness}, avec $Pop$ comme taille de la population d'individus. Le second opérateur de sélection et de classement est la version élitiste du premier. Il est appelé \textit{selectElitist}. Il remplace $Pop/10$ individus ayant la \textit{fitness} la plus faible de la popu\-lation, par le meilleur individu $Best1$ rencontré durant l'exécution. En pratique, il s'avère que la sélection élitiste n'est pas efficace sur le problème. Celle-ci n'est donc pas utilisée en pratique sur le problème.
+
+\begin{algorithm}[htp]
+%\KwIn{}
+\Sortie{$Best2$}
+\Deb{
+    $Best1, Best2 \in$ Solution\;
+    $P$: Population;\tcp{100 individus}
+    $Gen \in$ {\bf Entier}\;
+    $Gen \leftarrow 0$\;
+    $P \leftarrow generate(P)$; \tcp{Générer les individus} 
+    $Best1 \leftarrow getBest(P)$\;
+	  \tcp{Répéter $MaxGen$ générations}
+    \Tq{$Gen < MaxGen$ {\bf et} $\neg$ (solution construite)}{ 
+	  	$Gen \leftarrow Gen + 1$\;
+
+	  	\tcp{Appliquer une opération/mutation de voisinage}
+	  	$P \leftarrow locaSearch(P)$\;
+
+	  	\tcp{Mémoriser le meilleur individu}
+		  $Best1 \leftarrow getBest(P, Best1)$\;
+		  $Best2 \leftarrow getBest(Best1, Best2)$\;
+
+	  	\tcp{Appliquer les opérateurs de sélection}
+	  	$P \leftarrow select(P, size(P)/5)$\;
+	  	%\tcp{$P \leftarrow selectElitist(P, Best1, size(P)/10)$\;}
+
+		  \tcp{Appliquer une mutation}
+		  $P \leftarrow mutate(P)$\;
+		  
+    }
+    \Retour{$Best2$}\;
+}
+\caption{Boucle type d'un algorithme évolutionnaire}
+\label{algo_implant}
+\end{algorithm}
+
+\subsection{Version mémétique}
+\label{algorithme_memetic}
+
+Le détail des opérateurs de mutation pour l'algorithme mémétique est donné dans l'Algorithme \ref{oper_memetique}. Dans ce cas, les opérations de mutation deviennent des appels aux procédures de construction et de recherche locale que nous avons spécifiées anté\-rieurement. L'opérateur \textit{mutate} effectue un appel de la procédure de construction itérée tandis que l'opérateur \textit{localSearch} exécute un appel de la procédure de recherche locale. 
+
+L'intérêt recherché est de coupler la dynamique de diversi-fication et de sélection de l'approche évolu\-tionnaire avec des recherches locales adaptées pour l'intensi\-fication de la recherche dans une zone réduite de l'espace des solutions. Le principe de l'algorithme évolutionnaire, via une population de solutions et des opérateurs de sélection, vise à augmenter la diversité des solutions potentielles. L'algorithme mémétique tire partie des avantages de la recherche locale et de la diversification au sein d'une population.
+
+\begin{algorithm}[htp]
+    {Procédure \bf generate}{($P \in$ Population)}\\
+		\Deb{
+	    \Pour{chaque individu $I \in P$} {
+				$I \leftarrow constructSolution(I)$ \tcp{Correspond à la construction spécifiée dans l'Algorithme (\ref{constr_proc})}
+	    }
+	  }
+    {Procédure \bf mutate}{($P \in$ Population)}\\
+		\Deb{
+	    \Pour{chaque individu $I \in P$}{
+	      \tcp{Appliquer la mutation avec une probabilité de 0.5}
+				\Si{$rand(0, 1) > 0.9$}{	
+					$I \leftarrow constructSolution(I)$ \tcp{Correspond à la construction spécifiée dans l'Algorithme (\ref{constr_proc})}
+				}
+	    }
+	  }
+    {Procédure\bf localSearch}{($P \in$ Population)}\\
+	  \Deb{
+	     \Pour{chaque individu $I \in P$}{
+				$I \leftarrow improveSolution(I)$  \tcp{Correspond à la recherche locale spécifiée à l'Algorithme (\ref{local_search})}
+	     }
+		} 
+\begin{footnotesize}
+\begin{tabular}{l}
+\end{tabular}
+\end{footnotesize}
+\caption{Les opérateurs de variation de l'algorithme mémétique}
+\label{oper_memetique}
+\end{algorithm}
+

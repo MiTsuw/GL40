@@ -1,0 +1,475 @@
+%%
+%%  A LaTeX template for formating a PhD thesis under the requirements
+%%  of the Universite Europeenne de Bretagne (UEB)
+%%
+%%  Designed by Alexandre Bouenard [alexandre.bouenard@univ-ubs.fr]
+%%
+
+
+
+
+\NeedsTeXFormat{LaTeX2e}
+\typeout{}
+\typeout{UEB PhD Thesis Template}
+\typeout{}
+
+
+
+
+\RequirePackage{latexsym}
+\RequirePackage{makeidx}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\RequirePackage{float}
+%\RequirePackage[frenchb]{babel}
+\RequirePackage{eso-pic}
+\RequirePackage[absolute]{textpos}
+%\RequirePackage[frenchb]{babel}
+\RequirePackage[avantgarde]{quotchap}
+\RequirePackage[calcwidth]{titlesec}
+\RequirePackage{multicol}
+
+
+\newcommand{\THESE}{TH{\`E}SE / UNIVERSIT{\'E} DE BRETAGNE SUD}
+\newcommand{\UNIV}{Universit{\'e} de Bretagne Sud}
+\newcommand{\UNIVaddress}{Universit{\'e} de Bretagne Sud}
+\newcommand{\UFR}{UFR Sciences et Sciences de l'Ing{\'e}nieur}
+\newcommand{\SCEAU}{sous le sceau de l'Universit{\'e} Europ{\'e}enne de Bretagne}
+\newcommand{\GRADE}{DOCTEUR DE L'UNIVERSIT{\'E} DE BRETAGNE SUD}
+\newcommand{\MENTION}{STIC}
+\newcommand{\ED}{SICMA}
+\newcommand{\AUTEURprenom}{ Boureima}
+\newcommand{\AUTEURnom}{Zerbo}
+\newcommand{\LAB}{Lab-STICC}
+\newcommand{\TITRE}{Prob{\`e}mes des plus courts chemins dans les NoC et leurs extensions aux cas difficiles}
+\newcommand{\DATE}{03 d{\'e}cembre 2012}
+\newcommand{\PRESIDENTgenre}{M}
+\newcommand{\PRESIDENTtitre}{Pr{\'e}sident}
+\newcommand{\PRESIDENTprenom}{Pepito}
+\newcommand{\PRESIDENTnom}{Sanchez}
+\newcommand{\PRESIDENTqualite}{Professeur}
+\newcommand{\RAPPORTEURgenrei}{M}
+\newcommand{\RAPPORTEURtitre}{Rapporteur}
+\newcommand{\RAPPORTEURprenomi}{Pepito}
+\newcommand{\RAPPORTEURnomi}{Sanchez}
+\newcommand{\RAPPORTEURqualitei}{Professeur}
+\newcommand{\EXAMINATEURgenrei}{M}
+\newcommand{\EXAMINATEURtitre}{Examinateur}
+\newcommand{\EXAMINATEURprenomi}{Yves}
+\newcommand{\EXAMINATEURnomi}{Lebrac}
+\newcommand{\EXAMINATEURqualitei}{Dessinateur, Spirou Magasine}
+\newcommand{\INVITEgenrei}{M}
+\newcommand{\INVITEtitre}{Invite}
+\newcommand{\INVITEprenomi}{Yves}
+\newcommand{\INVITEnomi}{Lebrac}
+\newcommand{\INVITEqualitei}{Dessinateur, Spirou Magasine}
+\newcommand{\DIRECTEURgenrei}{M}
+\newcommand{\DIRECTEURtitre}{Directeur de th{\`e}se}
+\newcommand{\DIRECTEURtitrei}{Directeur de th{\`e}se}
+\newcommand{\DIRECTEURprenomi}{Jules}
+\newcommand{\DIRECTEURnomi}{de-chez-Smith-en-face}
+\newcommand{\DIRECTEURqualitei}{Complice, Smith}
+\newcommand{\RESUMEfrancais}{Une super th{\`e}se traitant d'une nouvelle super invention de Gaston : la tondeuse {\`a} gazon miniature.}
+\newcommand{\RESUMEanglais}{An awesome PhD thesis dealing with a brand new invention designed by Gaston: a miniature lawn mower.}
+\newcommand{\RESUMEtitre}{Conception et Evaluation\\ d'une Tondeuse\\ {\`a} Gazon Miniature}
+\newcommand{\NORDRE}{273}
+
+% Add this code before \begin{document} 
+%\usepackage{eso-pic}
+%\newcommand\BackgroundPic{
+%\put(0,0){
+%\parbox[b][\paperheight]{\paperwidth}{%
+%\vfill
+%\centering
+%\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{./Logos/FrontCover_UEB.eps}%
+%\vfill
+%}}}
+%	\AddToShipoutPicture{\BackgroundPic}
+	
+% and this immediately after \begin{document} :
+
+
+
+\newcommand{\COVERBACKGROUND}[2]{
+	\begin{textblock*}{.5\paperwidth-2mm}(0mm,{#2}\paperwidth-32mm)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-2mm}
+        			\vspace{3pt}
+				\noindent \flushright \small \textcolor{red}{\fontfamily{phv}\selectfont \textbf{\THESE}}
+				%\vspace{-6pt}
+				%\noindent \flushright \scriptsize \textcolor{red}{\fontfamily{phv}\selectfont \textbf{\UFR}}
+				\vspace{-7pt}
+				\noindent \flushright \tiny \textcolor{red}{\fontfamily{phv}\selectfont \emph{\SCEAU}}
+				\vspace{-3pt}
+				\noindent \flushright \tiny \textcolor{red}{\fontfamily{phv}\selectfont Pour obtenir le grade de :}
+				\vspace{-8pt}
+				\noindent \flushright \tiny \textcolor{red}{\fontfamily{phv}\selectfont \textbf{\GRADE}}
+				\vspace{-8pt}
+				\noindent \flushright \tiny \textcolor{red}{\fontfamily{phv}\selectfont \emph{Mention : \MENTION}}
+				\vspace{-8pt}
+				\noindent \flushright \tiny \textcolor{red}{\fontfamily{phv}\selectfont \textbf{{\'E}cole Doctorale \ED}}
+%				\hspace{1pt}}				
+			\end{minipage}
+		}
+	\end{textblock*}
+
+	\begin{textblock*}{.5\paperwidth-2mm}(.5\paperwidth+2mm,{#2}\paperwidth-32mm)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-2mm}
+				\vspace{3.6mm}
+				\noindent \flushleft \scriptsize \textcolor{red}{\fontfamily{phv}\selectfont pr{\'e}sent{\'e}e par}
+				\vspace{-9pt}
+				\noindent \flushleft \LARGE \textcolor{red}{\fontfamily{phv}\selectfont \AUTEURprenom\ \AUTEURnom}
+				\vspace{-3pt}
+				\noindent \flushleft \normalsize \textcolor{red}{\fontfamily{phv}\selectfont \LAB}
+			\end{minipage}
+		}
+	\end{textblock*}
+
+	\begin{textblock*}{.5\paperwidth-2mm}(0mm,{#2}\paperwidth+1mm)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-10pt}
+				\noindent \flushright \huge \textcolor{black}{\fontfamily{phv}\selectfont \textbf{\TITRE}}
+			\end{minipage}
+		}
+	\end{textblock*}
+
+	\begin{textblock*}{.5\paperwidth-2mm}(.5\paperwidth+2mm,{#2}\paperwidth)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-0mm}
+				\vspace{1mm}
+				\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont \textbf{Th{\`e}se soutenue le \DATE,}}
+				\vspace{-9pt}
+				\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont devant la commission d'examen compos{\'e}e de :}
+
+				\vspace{-5pt}
+
+				\noindent \flushleft \tiny \textcolor{black}
+				{\fontfamily{phv}\selectfont \textbf{\PRESIDENTgenre.\ \PRESIDENTprenom\
+				\PRESIDENTnom}
+				}
+				\vspace{-9pt}
+				\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont \PRESIDENTqualite\ / \PRESIDENTtitre}
+
+
+\vspace*{2ex}
+				\setcounter{III}{0}
+				\whiledo{{\value{III}<\value{cptRapporteur}}}{
+					\stepcounter{III}
+					\vspace{-5pt}
+					\noindent \flushleft \hspace{-4pt} \tiny \textcolor{black}{\fontfamily{phv}\selectfont \textbf{
+						{\csname RAPPORTEURgenre\roman{III}\endcsname}.\ {\csname RAPPORTEURprenom\roman{III}\endcsname}\ {\csname RAPPORTEURnom\roman{III}\endcsname}}
+					}
+					\vspace{-9pt}
+					\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont
+						{\csname RAPPORTEURqualite\roman{III}\endcsname}\ / \RAPPORTEURtitre
+					}
+				}
+
+				\setcounter{III}{0}
+				\whiledo{{\value{III}<\value{cptExaminateur}}}{
+					\stepcounter{III}
+					\vspace{-5pt}
+					\noindent \flushleft \hspace{-4pt} \tiny \textcolor{black}{\fontfamily{phv}\selectfont \textbf{
+						{\csname EXAMINATEURgenre\roman{III}\endcsname}.\ {\csname EXAMINATEURprenom\roman{III}\endcsname}\ {\csname EXAMINATEURnom\roman{III}\endcsname}}
+					}
+					\vspace{-9pt}
+					\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont
+						{\csname EXAMINATEURqualite\roman{III}\endcsname}\ / \EXAMINATEURtitre
+					}
+				}
+				\setcounter{III}{0}
+				\whiledo{{\value{III}<\value{cptInvite}}}{
+					\stepcounter{III}
+					\vspace{-5pt}
+					\noindent \flushleft \hspace{-4pt} \tiny \textcolor{black}{\fontfamily{phv}\selectfont \textbf{
+						{\csname INVITEgenre\roman{III}\endcsname}.\ {\csname INVITEprenom\roman{III}\endcsname}\ {\csname INVITEnom\roman{III}\endcsname}}
+					}
+					\vspace{-9pt}
+					\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont
+						{\csname INVITEqualite\roman{III}\endcsname}\ / \INVITEtitre
+					}
+				}
+				\setcounter{III}{0}
+				\whiledo{{\value{III}<\value{cptDirecteur}}}{
+					\stepcounter{III}
+					\vspace{-5pt}
+					\noindent \flushleft \hspace{-4pt} \tiny \textcolor{black}{\fontfamily{phv}\selectfont \textbf{
+						{\csname DIRECTEURgenre\roman{III}\endcsname}.\ {\csname DIRECTEURprenom\roman{III}\endcsname}\ {\csname DIRECTEURnom\roman{III}\endcsname}}
+					}
+					\vspace{-9pt}
+					\noindent \flushleft \tiny \textcolor{black}{\fontfamily{phv}\selectfont
+						{\csname DIRECTEURqualite\roman{III}\endcsname}\ / {\csname DIRECTEURtitre\roman{III}\endcsname}
+					}
+				}
+			\end{minipage}
+		}
+	\end{textblock*}
+
+	\begin{textblock*}{\paperwidth}(0mm,0mm)
+ 	\noindent\includegraphics[width=\paperwidth,height={#2}\paperwidth]{#1}
+  %     \noindent\includegraphics[width=\paperwidth,height={#2}\paperheight,keepaspectratio]{#1}%{./Logos/FrontCover_UEB.eps}%
+	\end{textblock*}
+
+}
+
+
+
+
+\newcommand{\makePhDThesisUEB}{
+	\thispagestyle{empty}
+	\COVERBACKGROUND{./Logos/couverture.eps}{1.02489019}
+}
+
+\setlength{\hoffset}{0mm}
+\setlength{\voffset}{0mm}
+\setlength{\paperheight}{297mm}
+\setlength{\paperwidth}{210mm}
+\setlength{\textwidth}{145mm}
+\setlength{\marginparwidth}{0mm}
+\setlength{\headheight}{2\baselineskip}
+\setlength{\textheight}{210mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\oddsidemargin}{15mm}
+\renewcommand{\ps@plain}{
+	\renewcommand{\@oddhead}{}
+	\renewcommand{\@evenhead}{}
+	\renewcommand{\@evenfoot}{\hfil\textrm{\thepage}\hfil}
+	\renewcommand{\@oddfoot}{\@evenfoot}
+}
+\renewcommand{\ps@headings}{
+	\renewcommand{\@oddhead}{\parbox{210mm}{\leftmark\hfil\thepage}}
+	\renewcommand{\@evenhead}{\parbox{210mm}{\thepage\hfil\rightmark}}
+	\renewcommand{\@evenfoot}{}
+	\renewcommand{\@oddfoot}{\@evenfoot}
+}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\addtocounter{secnumdepth}{1}
+\AtBeginDocument{
+	\makeindex
+	\def\uppercase{}
+	\newcounter{cptRapporteur}
+	\setcounter{cptRapporteur}{0}
+	\newcounter{cptExaminateur}
+	\setcounter{cptExaminateur}{0}
+	\newcounter{cptInvite}
+	\setcounter{cptInvite}{0}
+	\newcounter{cptDirecteur}
+	\setcounter{cptDirecteur}{0}
+	\newcounter{III}
+}
+\AtEndDocument{
+}
+
+
+
+
+\newcommand{\ignore}[1]{}
+\newcommand{\rmq}[1]{{\noindent\texttt{\textbf{Remarque:}#1}}}
+\newcommand{\nohyphens}{\hyphenpenalty=10000\exhyphenpenalty=10000\relax}
+\newcommand{\whitepage}{\newpage\thispagestyle{empty}\addtocounter{page}{-1}~\vspace*{3cm}~\vfill~\newpage}
+\renewcommand\chapterheadstartvskip{\vspace*{-5\baselineskip}}
+
+
+
+
+\newcommand{\Titre}[1]{\renewcommand{\TITRE}{{\LARGE\textbf{#1}}}}
+\newcommand{\DateSoutenance}[1]{\renewcommand{\DATE}{#1}}
+\newcommand{\Auteur}[2]{
+	\renewcommand{\AUTEURprenom}{#1}
+	\renewcommand{\AUTEURnom}{#2}
+}
+\newcommand{\Composante}[4]{
+	\renewcommand{\UNIV}{#1}
+	\renewcommand{\UNIVaddress}{#2}
+	\renewcommand{\UFR}{#3}
+	\renewcommand{\LAB}{#4}
+}
+\newcommand{\President}[4]{
+	\renewcommand{\PRESIDENTgenre}{#1}
+	\ifthenelse{\equal{#1}{Me}}{\renewcommand{\PRESIDENTtitre}{Pr{\'e}sidente}}{}
+	\renewcommand{\PRESIDENTprenom}{#2}
+	\renewcommand{\PRESIDENTnom}{#3}
+	\renewcommand{\PRESIDENTqualite}{#4}
+}
+\newcommand{\Rapporteur}[4]{
+	\stepcounter{cptRapporteur}
+	\nouveauRapporteur{\roman{cptRapporteur}}{#1}{#2}{#3}{#4}
+}
+\newcommand{\nouveauRapporteur}[5]{
+	\expandafter\def\csname RAPPORTEURgenre#1\endcsname{#2}
+	\expandafter\def\csname RAPPORTEURprenom#1\endcsname{#3}
+	\expandafter\def\csname RAPPORTEURnom#1\endcsname{#4}
+	\expandafter\def\csname RAPPORTEURqualite#1\endcsname{#5}
+}
+\newcommand{\Examinateur}[4]{
+	\stepcounter{cptExaminateur}
+	\nouveauExaminateur{\roman{cptExaminateur}}{#1}{#2}{#3}{#4}
+}
+\newcommand{\nouveauExaminateur}[5]{
+	\expandafter\def\csname EXAMINATEURgenre#1\endcsname{#2}
+	\expandafter\def\csname EXAMINATEURprenom#1\endcsname{#3}
+	\expandafter\def\csname EXAMINATEURnom#1\endcsname{#4}
+	\expandafter\def\csname EXAMINATEURqualite#1\endcsname{#5}
+}
+\newcommand{\Invite}[4]{
+	\stepcounter{cptInvite}
+	\nouveauInvite{\roman{cptInvite}}{#1}{#2}{#3}{#4}
+}
+\newcommand{\nouveauInvite}[5]{
+	\expandafter\def\csname INVITEgenre#1\endcsname{#2}
+	\renewcommand{\INVITEtitre}{Invit{\'e}}{}
+	\expandafter\def\csname INVITEprenom#1\endcsname{#3}
+	\expandafter\def\csname INVITEnom#1\endcsname{#4}
+	\expandafter\def\csname INVITEqualite#1\endcsname{#5}
+}
+\newcommand{\Directeur}[5]{
+	\stepcounter{cptDirecteur}
+	\nouveauDirecteur{\roman{cptDirecteur}}{#1}{#2}{#3}{#4}{#5}
+}
+\newcommand{\nouveauDirecteur}[6]{
+	\expandafter\def\csname DIRECTEURgenre#1\endcsname{#2}
+	\expandafter\def\csname DIRECTEURprenom#1\endcsname{#3}
+	\expandafter\def\csname DIRECTEURnom#1\endcsname{#4}
+	\expandafter\def\csname DIRECTEURqualite#1\endcsname{#5}
+	\expandafter\def\csname DIRECTEURtitre#1\endcsname{#6}
+}
+
+
+\newcommand{\Resumes}[3]{
+        \renewcommand{\RESUMEtitre}{#1}
+	\renewcommand{\RESUMEfrancais}{#2}
+	\renewcommand{\RESUMEanglais}{#3}
+}
+
+
+
+
+\newcommand{\resumes}{
+
+        \begin{textblock*}{.5\paperwidth-2cm}(1.5cm,2cm)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-2cm}
+				\begin{center}
+			                \small \fontfamily{phv}\selectfont \textbf{R{\'e}sum{\'e}}
+		                \end{center}
+		                \scriptsize \fontfamily{phv}\selectfont \RESUMEfrancais
+			\end{minipage}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{.5\paperwidth-2cm}(.5\paperwidth+2.5mm,2cm)
+		\noindent\mbox{
+			\begin{minipage}{.5\paperwidth-2cm}
+	                        \begin{center}
+			                \small \fontfamily{phv}\selectfont \textbf{Abstract}
+		                \end{center}
+		                \scriptsize \fontfamily{phv}\selectfont \RESUMEanglais
+			\end{minipage}
+		}
+	\end{textblock*}
+	
+	\begin{textblock*}{\paperwidth-2cm}(1.5cm,25.7cm)
+        	\noindent\mbox{
+			\begin{minipage}{\paperwidth-2cm}
+        	       	\noindent\includegraphics[width=2.5cm,height=2.5cm]{./Logos/logoUBS200x150px.eps}
+	        	\end{minipage}
+                }	        	
+	\end{textblock*}
+	
+	\begin{textblock*}{\paperwidth-2cm}(4.5cm,25.6cm)
+		\noindent\mbox{
+			\begin{minipage}{\paperwidth-2cm}	                        
+        	                        \noindent \flushleft \small \fontfamily{phv}\selectfont n d'ordre : \NORDRE
+        	                        \vspace{-8pt}
+			                \noindent \flushleft \small \fontfamily{phv}\selectfont \textbf{\UNIV}
+			                \vspace{-8pt}
+			                \noindent \flushleft \scriptsize \fontfamily{phv}\selectfont \LAB 
+                            \vspace{-8pt}			                
+			                \noindent \flushleft \scriptsize \fontfamily{phv}\selectfont \UNIVaddress
+  			                     
+			\end{minipage}
+		}
+	\end{textblock*}
+	
+}
+
+
+\newcommand{\remerciements}[1]{
+	\thispagestyle{empty}
+	\section*{Remerciements}
+
+Je remercie M. Aziz Moukrim, Professeur des Universit{\'e}s, Universit{\'e} de Technologie de Compiègne, qui me fait l'honneur de pr{\'e}sider ce jury.
+\\
+\\
+Je remercie M. Lionel Amod{\'e}o, Professeur des Universit{\'e}s, Universit{\'e} de Technologie de Troyes et M. Philippe Lacomme, Maître de Conf{\'e}rences HDR, Universit{\'e} Blaise Pascal, Clermont-Ferrand, d'avoir bien voulu accepter la charge de rapporteur.
+\\
+\\
+Je remercie M. Claude Yugma, Charg{\'e} de Recherche, École des Mines de St Étienne, d'avoir bien voulu accepter la charge d'examinateur. 
+\\
+\\
+Je remercie M. Jean-Philippe Diguet, Directeur de Recherche, CNRS, Lab-STICC, Universit{\'e} de Bretagne-Sud, Lorient, d'avoir bien voulu accepter la charge d'invit{\'e} et examinateur.
+\\
+\\
+Mes plus sincères remerciements à M. Marc Sevaux, Professeur des Universit{\'e}s, Lab-STICC, Universit{\'e} de Bretagne-Sud, Lorient, M. Oumarou Si{\'e}, Maître de Conf{\'e}rences CAMES, LTIC, Universit{\'e} de Ouagadougou, Burkina Faso, M. Andr{\'e} Rossi, Maître de Conf{\'e}rences HDR, Lab-STICC, Universit{\'e} de Bretagne-Sud, Lorient et M. Jean-Charles Cr{\'e}put, Maître de Conf{\'e}rences HDR, Universit{\'e} de Technologie de Belfort-Montb{\'e}liard, qui ont dirig{\'e} ma thèse. Leur aide, conseil et guide m'ont {\'e}t{\'e} pr{\'e}cieux pendant ces quatre ann{\'e}es.
+\\
+\\
+Ma reconnaissance à Éric, pour les contacts ayant permis d'être accueilli au Lab-STICC.
+\\
+% 	Je remercie \PRESIDENTgenre.\ \PRESIDENTprenom\ \PRESIDENTnom, \PRESIDENTqualite, qui me fait l'honneur de pr{\'e}sider ce jury.\\[\baselineskip]
+% 	Je remercie 
+%         \setcounter{III}{1}
+% 	\whiledo{\value{III}<\value{cptRapporteur}}{
+% 		{\hspace{-0.3 cm} \csname RAPPORTEURgenre\roman{III}\endcsname}.\ {\csname RAPPORTEURprenom\roman{III}\endcsname}\
+% {\csname RAPPORTEURnom\roman{III}\endcsname}, {\csname RAPPORTEURqualite\roman{III}\endcsname}%
+% 		\stepcounter{III}
+% 		\ifthenelse{\value{III}=\value{cptRapporteur}}{et}{\hspace{-0.15 cm},}
+% 	}{\csname RAPPORTEURgenre\roman{III}\endcsname}.\ {\csname RAPPORTEURprenom\roman{III}\endcsname}\ {\csname RAPPORTEURnom\roman{III}\endcsname}, {\csname RAPPORTEURqualite\roman{III}\endcsname}, d'avoir bien voulu accepter la charge de rapporteur.\\[\baselineskip]
+% 	Je remercie
+% 	\setcounter{III}{1}
+% 	\whiledo{\value{III}<\value{cptExaminateur}}{
+% 		{\hspace{-0.35 cm} \csname EXAMINATEURgenre\roman{III}\endcsname}.\ {\csname EXAMINATEURprenom\roman{III}\endcsname}\ {\csname
+% EXAMINATEURnom\roman{III}\endcsname}, {\csname EXAMINATEURqualite\roman{III}\endcsname}
+% 		\stepcounter{III}
+% 		\ifthenelse{\value{III}=\value{cptExaminateur}}{\hspace{-0.05 cm}et}{, }
+% 	}{\csname EXAMINATEURgenre\roman{III}\endcsname}.\ {\csname EXAMINATEURprenom\roman{III}\endcsname}\ {\csname EXAMINATEURnom\roman{III}\endcsname}, {\csname EXAMINATEURqualite\roman{III}\endcsname}, d'avoir bien voulu accepter la charge d'examinateur.\\[\baselineskip]	
+% 	Je remercie
+% 	\setcounter{III}{1}
+% 	\whiledo{\value{III}<\value{cptInvite}}{
+% 		{\hspace{-0.35 cm} \csname INVITEgenre\roman{III}\endcsname}.\ {\csname INVITEprenom\roman{III}\endcsname}\ {\csname
+% INVITEnom\roman{III}\endcsname}, {\csname INVITEqualite\roman{III}\endcsname}
+% 		\stepcounter{III}
+% 		\ifthenelse{\value{III}=\value{cptInvite}}{\hspace{-0.05 cm}et}{, }
+% 	}{\csname INVITEgenre\roman{III}\endcsname}.\ {\csname INVITEprenom\roman{III}\endcsname}\ {\csname INVITEnom\roman{III}\endcsname}, {\csname INVITEqualite\roman{III}\endcsname}, d'avoir bien voulu accepter la charge d'invit{\'e} et examinateur.\\[\baselineskip]
+% 	Mes plus sinc\`eres remerciements à 
+% 	\setcounter{III}{1}
+% 	\whiledo{\value{III}<\value{cptDirecteur}}{
+% 		{\hspace{-0.30 cm} \csname DIRECTEURgenre\roman{III}\endcsname}.\ {\csname DIRECTEURprenom\roman{III}\endcsname}\ {\csname DIRECTEURnom\roman{III}\endcsname}, {\csname DIRECTEURqualite\roman{III}\endcsname}
+% 		\stepcounter{III}
+% 		\ifthenelse{\value{III}=\value{cptDirecteur}}{\hspace{-0.03 cm}et}{, }} {\csname DIRECTEURgenre\roman{III}\endcsname}.\ {\csname DIRECTEURprenom\roman{III}\endcsname}\ {\csname DIRECTEURnom\roman{III}\endcsname}, {\csname DIRECTEURqualite\roman{III}\endcsname}, qui ont dirig{\'e} ma th{\`e}se. Leur aide, conseil et guide m'ont \'et\'e pr\'ecieux pendant ces quatre ann\'ees.\\[\baselineskip]
+Ma pens{\'e}e va à feu Seydou Zerbo, mon père, qui durant sa courte vie a su construire en moi une source d'{\'e}nergie. 
+\newline
+Je remercie ma mère, Boussitoa Fanta, qui a su me sortir des tempêtes de la vie au moment où j'{\'e}tais le moins capable à les affronter. 
+\newline
+Mes chaleureux remerciements à mon {\'e}pouse, A\"{\i}chatou, à ma fille Fodè, dont le pr{\'e}nom {\'e}vocateur de patience a caract{\'e}ris{\'e} sa mère et elle, durant mes absences et parfois mon indisponibilit{\'e} pendant mes pr{\'e}sences. 
+\newline
+Je remercie mes frères et s\oe{}urs Zerbo de leurs soutiens.
+\newline
+Je remercie mes amis et frères Seglaro Som{\'e}, qui a guid{\'e} mes premiers pas comme enseignant à l'universit{\'e}, et Ibrahiman Sakand{\'e} pour ses encouragements.
+\newline
+Je remercie, Matthieu et Cl{\'e}mence, qui m'ont ouvert les bras pendant mes s{\'e}jours en France.
+\newline
+À tout mes ami(e)s, je dis merci pour leurs soutiens multiformes.
+}
+
+
+\newcommand{\alignquatriemedecouv}{
+	\newpage\thispagestyle{empty}~
+	\ifodd\value{page}
+		\newpage\thispagestyle{empty}
+	\else
+		\newpage\thispagestyle{empty}~\newpage\thispagestyle{empty}
+	\fi
+}
+

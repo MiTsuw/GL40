@@ -1,0 +1,112 @@
+\documentclass[a4paper,12pt]{report}
+%\documentclass[a4paper,11pt,twoside]{./Systems/StyleThese}
+%\documentclass[11pt]{book}
+\include{./Systems/formatAndDefs}
+\usepackage[latin1]{inputenc}% accent standard clavier
+%\usepackage[frenchb]{babel}
+%\usepackage[cyr]{aeguill}
+%\usepackage[T1]{fontenc}
+\usepackage{lmodern} 
+\usepackage[]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{epsfig,amsthm}
+\usepackage{moreverb}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[all]{xy}
+\usepackage{./Systems/shorttoc}
+\usepackage{./Systems/floatflt}
+\usepackage{textcomp}
+
+%\usepackage[lined,algonl,boxed]{./Systems/algorithm2e}
+\usepackage[french,ruled,vlined]{./Systems/algorithm2e}
+\usepackage{url}
+%\SetKw{KwOr}{or}
+
+\newtheorem{lemma}{Lemme}
+\newtheorem{property}{Propriété}
+%\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remarque}
+\newtheorem{theorem}{Théorème}
+\newtheorem{prop}{Proposition}
+\renewcommand{\proof}{\textbf{Preuve}}
+%\usepackage{cite}
+\usepackage[]{natbib}
+\usepackage{longtable}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\usepackage{multicol}
+
+%%%%  macro dans le préambule %%%%
+\makeatletter
+\def\captionof#1#2{{\def\@captype{#1}#2}}
+\makeatother
+%%%% fin macro %%%%
+%\begin{minipage}[b]{0.45\linewidth}
+
+
+\usepackage{setspace}
+%\doublespacing
+
+\newcommand{\og}{\resizebox{5pt}{5pt}{$<\!<$}\ }
+\newcommand{\fg}{\resizebox{5pt}{5pt}{$>\!>$}\ }
+\newcommand{\quotefr}[1]{\resizebox{5pt}{5pt}{$<\!<$}\ {#1}\ \resizebox{5pt}{5pt}{$>\!>$}}
+
+\makeindex
+\def\underscore{\char`\_}
+
+%\setlength{\doublerulesep}{\arrayrulewidth}
+
+%==========================================================================================================
+\begin{document}
+
+%\addtocounter{page}{-1}
+%------------------------------------------------------------------------------------------------------
+%  Page de garde
+\title{Application d'optimisation\\
+Conception générale}
+%\subtitle{Conception générale}
+\author{J.C. Créput}
+\date{Janvier 2015}
+\maketitle
+
+
+%------------------------------------------------------------------------------------------------------
+%  Table des matieres
+%\addcontentsline{toc}{chapter}{Introduction Générale}
+\markboth{Contents}{Introduction}
+\tableofcontents
+
+%==========================================================================================================
+
+%  Chapitres
+\include{./Chapters/introduction}
+\include{./Chapters/chapitre_probleme}
+\include{./Chapters/chapitre_approche}
+\include{./Chapters/chapitre_structures}
+\include{./Chapters/chapitre_operateurs}
+\include{./Chapters/chapitre_algorithmes}
+\include{./Chapters/chapitre_jeux_de_tests}
+%\include{./Chapters/chapitre_evaluation}
+\include{./Chapters/conclusion}
+
+%------------------------------------------------------------------------------------------------------
+%  Annexes
+%\appendix
+%\input{./annexes/A/annexeA.tex}
+%\include{./Chapters/glossaire}
+%------------------------------------------------------------------------------------------------------
+%  Biblio
+%\nocite{*}
+\bibliographystyle{plain}%{alpha}
+%\bibliographystyle{unsrtnat.bst}%{alpha}
+\bibliography{./Biblio/biblio}
+%\addcontentsline{toc}{chapter}{References}
+
+
+\end{document}
+

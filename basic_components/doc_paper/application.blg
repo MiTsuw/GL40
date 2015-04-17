@@ -1,0 +1,21 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: D:\creput\AUT14\gpu_work\application_template\doc_conception_generale\application.aux
+A level-1 auxiliary file: ./Chapters/introduction.aux
+A level-1 auxiliary file: ./Chapters/chapitre_probleme.aux
+A level-1 auxiliary file: ./Chapters/chapitre_approche.aux
+A level-1 auxiliary file: ./Chapters/chapitre_structures.aux
+A level-1 auxiliary file: ./Chapters/chapitre_operateurs.aux
+A level-1 auxiliary file: ./Chapters/chapitre_algorithmes.aux
+A level-1 auxiliary file: ./Chapters/chapitre_jeux_de_tests.aux
+A level-1 auxiliary file: ./Chapters/conclusion.aux
+The style file: plain.bst
+Database file #1: ./Biblio/biblio.bib
+I was expecting a `,' or a `}'---line 480 of file ./Biblio/biblio.bib
+ :  author = {{Elmiligi}, H. and {Morgan}, A.A. and {El-Kharashi}, M.W} 
+ :                                                                      and {Gebali}, F.},
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 508 of file ./Biblio/biblio.bib
+ :  
+ :  year = {2004},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+(There were 2 error messages)

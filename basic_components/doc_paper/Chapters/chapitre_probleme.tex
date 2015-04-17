@@ -1,0 +1,58 @@
+\chapter{Définition du problème d'optimisation}
+\label{chapitre_2}
+
+Le problème est apparenté au problème de flôt optique (\textit{optical flow}).
+
+Ici, nous donnons la définition du problème d'optimisation, ce qui revient à préciser ses entrées, ses sorties, et les contraintes et objectifs du problème.
+
+\section{Entrée/sortie du programme d'optimisation}
+\label{entrees}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{./Img/test_gd.png}
+\caption{Entrée : exemple d'entrée}
+\label{figure:entree}
+\end{figure}
+
+Le programme d'optimisation est une fonction d'optimisation qui transforme une donnée d'entrée en une solution de sortie, en principe optimale au sens des contraintes et objectifs du problème. La donnée d'entrée est présentée par la figure \ref{figure:entree}. Elle comporte différents éléments. Un exemple de solution est donné à la figure \ref{figure:solution}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{./Img/test.png}
+\caption{Sortie : exemple de solution}
+\label{figure:solution}
+\end{figure}
+
+\section{Fonction objectif}
+\subsection{Fonction objectif globale agrégative}
+
+La fonction objectif globale à minimiser est une somme pondérée des objectifs définissant les critères et contraintes du problème :\\
+\\
+    $objectif ~=~ f\_objectif\_1~*~weightObjective1\\
+            +~ f\_objectif\_2 ~*~ weightObjective2\\
+            +~ f\_objectif\_3 ~*~ weightObjective3$
+\\
+
+La fonction objectif globale est réalisée par la fonction C++ :
+
+\begin{itemize}
+\item 		\textit{double SolutionObject::computeObjectif(void)}
+\end{itemize}
+
+Les différents objectifs et critères sont précisés dans les sections suivantes.
+
+\subsection{Objectif 1}
+
+\subsection{Objectif 2}
+
+\subsection{Objectif 3}
+
+\section{Définition du problème d'optimisation}
+
+Le problème d'optimisation est défini par une entrée, l'instance du problème, et une sortie, la solution du problème, dont l'évaluation doit correspondre à une valeur minimum de la fonction objectif agrégative.
+
+Une instance du problème consiste en différents composants. La solution fournit des valeurs des variables du problème. Le but est de fournir une solution optimale au sens de la minimisation de la fonction objectif agrégative.
+
+Une solution est dite admissible lorsque toutes les contraintes sont satisfaites. La satisfaction d'une contrainte revient à une mise à 0 de certains objectifs.
+

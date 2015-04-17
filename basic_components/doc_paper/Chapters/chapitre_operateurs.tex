@@ -1,0 +1,77 @@
+\chapter{Opérateurs de base}
+\label{chapitre_operateurs}
+
+Deux types de méthodes d'optimisation sont utilisées. Ce sont respectivement la recherche locale itérée et un algorithme mémétique dont nous avons donné les grandes lignes précédemment et que nous décrivons plus en détail dans le chapitre suivant. Ces méthodes ont en commun un ensemble d'opérateurs de base opérant sur la structure d'une solution. 
+
+Dans les deux cas de figure, une ou plusieurs solutions sont modifiées de manière itérative selon un opérateur de voisinage qui transforme un ou plusieurs items (épures) d'une solution courante. Cet opérateur de voisinage est composite en ce qu'il combine différents opérateurs de base ayant différentes fonctions (mouvement, swap). L'opérateur est stochastique en ce que le choix de la modification locale est en partie aléatoire. Plusieurs types d'opérateurs sont proposés. Enfin, l'opérateur de voisinage composite effectue une combinaison probabiliste des opérations de base.
+
+\section{Opérateur de mouvement}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{./Img/test.png}
+\caption{Opération de mouvement.}
+\label{figure:trans}
+\end{figure}
+
+L'opérateur de mouvement élémentaire est illustré par la figure \ref{figure:trans}. Il permet les opérations de mouvements. Cet opérateur de base est appelé par l'opé\-rateur de voisinage composite avec une probabilité élevée (environ 0,9). Il constitue l'opération de base la plus active dans le processus d'opti\-misation.
+
+\section{Opérateur de swap}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{./Img/test.png}
+\caption{Opération de swap.}
+\label{figure:swap}
+\end{figure}
+
+L'opérateur de swap est illustré par la figure \ref{figure:swap}. L'opération est appliquée par l'opérateur composite avec une probabilité assez faible (environ 0,01).
+
+\section{Opérateur de construction initiale}
+\label{const_gloutonne}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5cm]{./Img/test.png}
+\caption{Construction avec bruit aléatoire.}
+\label{figure:construction}
+\end{figure}
+
+L'opérateur de construction initiale cherche à produire une solution aussi vite que possible. Le résultat n'est pas nécessairement une solution admissible et peut présenter des  contraintes non satisfaites, ainsi qu'illustré à la figure \ref{figure:construction}. Le pseudo-code est donné dans l'Algorithme \ref{construct_par}. Noter que l'opérateur de construction n'est appelé qu'une seule fois pour initialiser une solution. Les recherches locales, et les procédés d'amélioration métaheuristiques peuvent alors démarrer.
+%$\rightarrow$  
+ 
+\begin{algorithm}[t] 
+\Entree{$S \in$ Solution}
+\Sortie{S}
+\Deb{
+	\tcp{Les composants sont préalablement triés}
+  \Tq{tous les composants ne sont pas placés }{
+    \Pour{chaque composant $v \in S$}{
+	  			Placer le composant selon une stratégie de construction\;
+    }
+  }
+  \Retour{$S$}\;
+}
+\caption{Construction initiale (constructSolutionSeq)}
+\label{construct_par}
+\end{algorithm}
+
+\section{Opérateur de voisinage}
+\label{voisinage}
+
+\begin{algorithm}%[H]
+\Entree{$S \in$ Solution}
+\Sortie{S}
+\Deb{
+	\tcp{Sélectionner un des opérateurs de base selon sa probabilité d'application}
+	\tcp{Appliquer l'opérateur $i$ sélectionné à la solution $S$}
+	$S \leftarrow operator_i(S)$\;
+	\Retour{$S$}\;
+}
+\caption{Opérateur de voisinage composite (generateNeighbor)}
+\label{neighbor_operator_0}
+\end{algorithm}
+
+L'opérateur de voisinage composite est utilisé au sein d'une stratégie de recherche locale ou mémétique. Il applique l'ensemble des opérateurs de base suivant une probabilité d'exécution spécifique à l'opérateur. Noter que l'opérateur de construction n'est pas concerné puisqu'il fournit seulement la solution de départ qui va être améliorée. L'opérateur de voisinage composite vise à transformer, au pas à pas, une solution non admissible de départ en une solution admissible avec un coût le plus réduit possible en temps d'exécution. Son exécution inclut la réévaluation incrémentale de la fonction objectif au sein de chaque opérateur élémentaire, ce qui est crucial pour le temps d'exécution. Le pseudo-code est résumé par l'Algorithme \ref{neighbor_operator_0}. La fonction de voisinage composite C++ opérant sur une solution correspond au profil \textit{void SolutionObject::generateNeighbor()}.
+
+

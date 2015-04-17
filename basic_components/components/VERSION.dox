@@ -1,0 +1,20 @@
+/*!
+\page pageVersions Versions
+***********************
+1.1
+---
+- mise au point de la chaine de cross-compilation Windows vers Raspberry Pi
+
+- modification des fichiers projets lib.pro, test.pro, pour qmake et cross-compilation
+
+	- pour la cross-compilation de Windows vers Linux Raspberry pi, mettre
+la variable d'environnement QMAKESPEC a linux-arm-gnueabi-g++, choix du Qt prealablement
+cross-compile pour Raspberry Pi et choix compilateur arm-linux-gnueabihf-g++.exe
+(chaine cross-compilation SysGCC)
+	- permet de compiler directement sur Raspberry Pi (qmake, make) faire CONFIG += arm
+
+- ajout de commentaires pour la generation de documentation par l'outil Doxygen
+
+1.0
+---
+*/

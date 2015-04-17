@@ -1,0 +1,12 @@
+#!/bin/bash
+rm -rf *.mat2dpts
+rm -rf *.grid2dpts
+rm -rf *.mat3dpts
+rm -rf *.grid3dpts
+rm -rf *.matcolors
+rm -rf *.gridcolors
+rm -rf *.data
+rm -rf *.stats
+rm -rf *.points
+rm -rf *.colors
+echo "------------------ Cleaning is finished ! ------------------"

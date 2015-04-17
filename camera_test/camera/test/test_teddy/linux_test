@@ -1,0 +1,8 @@
+#!/bin/bash
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-6.5/lib64
+#echo ${0}
+#echo $(pwd)
+#echo $(pwd)/${0}
+#echo $(cd "$(dirname "$0")"; pwd)
+./../../bin/application teddyL_groundtruth.pgm output.grid2dpts output.stats config.cfg
+echo "------------------ Finished ! ------------------"

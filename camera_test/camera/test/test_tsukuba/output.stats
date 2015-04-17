@@ -1,0 +1,14 @@
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	3	2.143	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	2	2.127	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	2	2.141	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	2	2.149	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	2	2.152	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	4.03574e-043	5.38099e-043	3.50325e-044	2	2.128	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+0	3.48156e-039	3.50325e-044	4.03574e-043	0	0.647	

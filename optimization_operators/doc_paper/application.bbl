@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{johnson:97}
+D.S. {Johnson} and L.A. {McGeoch}.
+\newblock {The Traveling Salesman Problem: A Case Study in Local Optimization}.
+\newblock In {\em {Aarts}, E.H.L. and {Lenstra}, J.K (eds) Local Search in
+  Combinatorial Optimization}, pages 215--310. John Wiley and Sons, London,
+  1997.
+
+\bibitem{moscato:03}
+P.~{Moscato} and C.~{Cotta}.
+\newblock {A gentle introduction to memetic algorithms}.
+\newblock In {\em Handbook of metaheuristics}, pages 105--144. Kluwer Academic
+  Publishers, Boston MA, 2003.
+
+\bibitem{spears:93}
+W.M. Spears, K.A. De~Jong, T.~Back, D.B. Fogel, and H.~de~Garis.
+\newblock {An overview of evolutionary computation}.
+\newblock In {\em Machine Learning: ECML-93, Lecture notes in computer
+  science}, volume 667, pages 442--459, 1993.
+
+\end{thebibliography}

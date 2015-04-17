@@ -1,0 +1,7 @@
+#!/bin/bash
+#echo ${0}
+#echo $(pwd)
+#echo $(pwd)/${0}
+#echo $(cd "$(dirname "$0")"; pwd)
+./../../../../opengl_viewer/viewer/bin/viewer config.cfg
+echo "------------------ Finished ! ------------------"

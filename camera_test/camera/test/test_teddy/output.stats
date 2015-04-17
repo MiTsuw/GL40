@@ -1,0 +1,4 @@
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	5.25487e-043	6.30584e-043	3.50325e-044	3	3.457	
+iteration	objective_1	objective_2	objective_3	duree(s)	duree(s.xx)	cuda_duree(ms)
+100	5.25487e-043	6.30584e-043	3.50325e-044	4	3.461	

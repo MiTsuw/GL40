@@ -1,0 +1,50 @@
+\chapter{Approche d'optimisation}
+\label{chapitre_resolution}
+
+Les problèmes de flôt optique avec contraintes sont NP-difficiles. Nous n'avons pas trouvé, dans la littérature sur le sujet, de méthode de résolution exacte de ce type de problème répondant à nos besoins. Une instance avec très peu d'éléments comporte déjà une combinatoire de type factorielle qui rend très difficile la résolution exacte en temps raisonnable. Il paraît justifié de tenter de résoudre le problème par des méthodes heuristiques et métaheu\-ristiques. Dans ce cas, nous ne garantissons pas l'obtention systématique d'un optimum global, ce qui prendrait un temps infiniment long, mais nous cherchons des solutions admissibles et de bonne qualité en temps raisonnable. Pour vérifier l'efficacité, les performances sont validées expérimentalement sur des jeux de tests représentatifs du problème concret. Nous abordons dans ce chapitre la présentation des principes de base des méthodes méta\-heuristiques proposées. 
+
+\section{Stratégie d'optimisation}
+\label{strategies}
+
+La démarche de résolution, appelée aussi stratégie de recherche ou d'optimi\-sation, est une démarche heuristique, fondée sur le principe des recherches locales d'une part, et sur le principe des algorithmes à base de population de solutions, tels que les algorithmes évolu\-tionnaires, d'autre part.
+
+De manière imagée, il s'agit de faire évoluer pas à pas une solution de départ, très approximative et ne respectant pas nécessairement les contraintes, vers une solution admissible satisfaisant toutes les contraintes du problème, via des séquences de mouvements simples et opérations de \textit{swap}, plus ou moins aléatoires, portant sur les composants de la solution. Ces mouvements sont réalisés conjointement aux réévaluations rapides des valeurs des objectifs impactés. Ce sont ces évaluations qui déterminent et orientent la sélection des mouvements réalisés.
+
+Chaque mouvement de base de la solution comporte l'évaluation des objectifs liés au composant considéré, le mouvement proprement dit, puis l'évaluation de l'impact du mouvement sur les valeurs des objectifs. Si l'impact est favorable, la nouvelle solution est retenue comme candidate à de nouvelles modifications, sinon elle n'est pas considérée et la solution précédente est à nouveau utilisée comme point de départ ou pivot de la recherche locale.
+
+La recherche locale met en oeuvre une démarche d'optimisation par réitération de mouvements locaux via les opérateurs de base de la résolution. Un des inconvénients de la recherche locale réside dans le minimum local où elle peut se trouver lorsque les mouvements de faible amplitude ne sont pas suffisants à faire évoluer favorablement la solution. La réponse apportée ici réside, ou bien dans la réitération du processus d'optimisation à partir de solutions aléatoires initiales différentes, ou bien dans l'utilisation d'une démarche évolu\-tionnaire mémétique.
+
+Le principe informel de l'algorithme évolutionnaire mémétique consiste à appliquer des recherches locales sur une population de solutions, d'autres opérations éventuelles, et à procéder à des sélections et remplacements de solutions. Les solutions les moins satisfaisantes sont remplacées par les plus satisfaisantes, à chaque itération, appelée une génération. La meilleure solution produite est fournie en sortie.
+
+Dans cette section, nous ne donnons que le principe général des méthodes sans entrer dans le détail des algorithmes. Les opérateurs de base ainsi que les pseudo-codes des méthodes de recherche sont présentés en détail dans les chapitres suivants. 
+
+\section{Principe de la recherche locale}
+\label{prin_local_search}
+La recherche locale consiste en une modification locale d'une solution cou\-rante en considérant un voisinage plus ou moins large de cette solution. Cette solution courante, pas nécessai\-rement admissible (satisfaisant toutes les contraintes), est obtenue au départ par une méthode de construction rapide. Les modifications locales déterminent une intensification de la recherche dans une zone plus ou moins restreinte de l'espace des solutions. La réi\-tération de la recherche locale à partir de solutions initiales aléatoires permet de diversifier la recherche \citep{johnson:97}. 
+
+En se basant sur une solution de départ préalablement construite mais pas nécessaire\-ment admissible, trois versions de la stratégie de recherche locale sont considérées. La première version est une méthode de recherche aléatoire itérée, de type marche aléatoire, que nous appelons IRS, pour \textit{Iterated Random searh}. La deuxième est une méthode de recherche locale gloutonne de type premier-meilleur que nous appelons ILS-FI, pour \textit{Iterated Local Search First Improvement}. La troisième est une recherche locale en profondeur que nous appelons ILS BI pour \textit{Iterated Local Search Best Improvement}. 
+
+La méthode IRS fait évoluer une solution courante en effectuant un nombre donné de mouvements successifs dans le voisinage, exécutés via un opérateur de voisinage, puis sélectionne la meilleure solution rencontrée. Chaque solution examinée est obtenue par modification de la solution précé\-dente à l'aide de l'opérateur de voisinage. Une suite de modifications de la solution courante est exécutée, leur nombre étant préalablement fixé. La meilleure solution rencontrée est sélectionnée. Le procédé complet est réitéré un certain nombre de fois après permutation éventuelle des épures pour favoriser l'émergence d'un ordre valide de chargement. La méthode est très simple puisque très peu d'opérations de copie de données sont effectuées à chaque d'itération.
+
+Dans les recherches locales ILS-FI et ILS-BI, une solution donnée constitue l'élément pivot autour duquel est effectuée la recherche dans le voisinage. Chaque nouvelle solution examinée est obtenue par modification de la solution pivot avec l'opérateur de voisinage. Les deux versions diffèrent par la règle de pivotage choisie. Dans ILS-FI, la première solution rencontrée de qualité supérieure à la solution pivot devient le nouveau pivot. Dans la version ILS-BI, la meilleure solution rencontrée à l'intérieur d'un échantillonnage du voisinage est sélectionnée comme le nouveau élément pivot. Seul un échantillon de taille limitée du voisinage est examiné.
+
+Dans les deux versions ILS-FI et ILS-BI, la recherche locale est arrêtée lorsqu'aucune amélioration n'est trouvée, c'est-à-dire lorsqu'on atteint un minimum local. En pratique, seul un échantillon du voisinage est examiné car il s'agit ici d'un voisinage large avec un trop grand nombre de voisins et d'un opérateur stochastique. La taille du voisinage est déterminée par le nombre de choix possibles d'épures auxquelles s'appliquent les différents opérateurs élémentaires de mouvement suivant un grand nombre de choix possibles, à chaque pas d'exécution. La taille du voisinage ne doit pas être confondue avec la taille de l'échantillon examiné, c'est-à-dire le nombre maximum de solutions examinées obtenues à partir d'un élément pivot. Ensuite, le procédé complet est réitéré un certain nombre de fois après permutation des épures ou réinitialisation de la solution via une nouvelle construction de départ.
+
+\section{Principe de l'algorithme mémétique}
+\label{prin_evolutionnaire}
+Nous proposons une autre manière d'explorer l'espace des solutions suivant le para\-digme des algorithmes évolutionnaires et mémétiques \citep{moscato:03, spears:93}. La recherche procède maintenant par une appli\-cation simultanée des opé\-rateurs de base, de voisinage et de construction, à un ensemble (une population) de solutions. Suivant la termi\-nologie des algorithmes évolu\-tionnaires, les solutions sont maintenant des \og individus \fg  qui doivent répondre aux exigences du problème. 
+
+Pour évaluer la qualité de la solution, une fonction appelée \textit{fitness} associe une valeur scalaire à chaque individu de la population. Cette fonction de fitness est une adaptation directe de la fonction objectif globale agrégative. Etant donné que nous représentons le problème par une minimisation de la fonction objectif, et non pas une maximisation, la fitness est ici de valeur opposée. Elle est définie de façon à ce que les \og meilleurs \fg individus ont une plus grande fitness, tandis que les \og mauvais \fg individus une fitness plus petite.
+
+\begin{figure}[hbtp]
+\begin{center}
+\includegraphics[width=\textwidth]{./Img/principe_ma.jpg}
+%\includegraphics[width=0.75\textwidth, natwidth=510, natheight=542] {./Img/principe_ma.jpg}
+\caption{Principe de l'algorithme mémétique.}
+\label{fig:principe_algo_memetic}
+\end{center}
+\end{figure}
+
+Des opérateurs de sélection permettent le remplacement des \og mauvaises \fg  solutions de la population par les \og meilleures \fg de la population. Un ou plusieurs opérateurs de mutation participent à la diversification et l'amélioration des solutions. Il sont mis en \oe{}uvre par les opérations de base de manipulation des imbrications.
+
+Si nous utilisons une recherche locale au sein d'un l'algorithme évolu\-tionnaire, nous obtenons un algorithme évolutionnaire de type mémétique \citep{moscato:03}. La figure \ref{fig:principe_algo_memetic} nous permet de schématiser le principe de recherche de solution par l'algorithme mémétique. Sur la figure sont illustrées les recherches locales exécutées en parallèle sur les individus de la population et conduisant à un minimum local. La multiplication de ces recherches locales couplée aux opérateurs de sélection et de mutation détermine la dynamique de recherche. L'objectif est de réutiliser les avantages de la recherche locale tout en fournissant des mécanismes de diversifications pour éviter d'être piégé dans un minimum local.
