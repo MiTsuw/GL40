@@ -1,0 +1,44 @@
+-But: Developper uen camera de visualisation artistique
+-Analyse de tache
+-Methode et modeles d'algorithme
+-structure de l'écran
+
+Avant le 20 MAI -> envoyer rapport sur l'état d'avancement par mail
+
+Soutenance du 15 au 18 Juin3
+	-1 rapport
+	-les codes sources
+	-présentation->5 minutes, Demonstration->5 min
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Pour la prochaine fois:
+	+apprendre à utiliser:
+		-BOOST
+		-Open GL
+	+analyse détaillé du projet
+	+plan du travail
+------------------------------------------------------------------------------------------------------------------	
+17/04/2012
+
+Travail à effectuer:
+
+1) Interface de viewer : Modifier l'interface
+2) Camera : -> rotation avec la souris: - vers la gauche
+						 - vers la droite
+						 - vers le haut
+						 - vers le bas
+			-> ZOOM: - Manuel
+					 - Automatique (lorsqu'on clique sur un bouton, la caméra doit zoomer automatiquement)
+			-> Translation: Faire translater l'image
+			-> Initialisation de la position de l'image
+			-> Interaction avec l'image (on doit pouvoir changer la couleur d'un pixel en cliquant dessus, on doit pouvoir supprimer un arc)
+			-> Affichage de 2 images
+			-> Autres améliorations que l'on pourra apporter
+
+	
+	
+	
+
+	
