@@ -55,7 +55,7 @@ public:
         string file_cfg;
         param->readConfigParameter("param_1","fileGrid3DPoints", file_cfg);
 
-        fi.open(file_cfg.c_str());
+        fi.open(file_cfg);
         if (!fi) {
             std::cout << "erreur ouverture mesh" << endl;
         }
@@ -70,7 +70,7 @@ public:
         //    fi.open("./data/result.gridcolors");
 
         param->readConfigParameter("param_1","fileGridOfColors", file_cfg);
-        fi.open(file_cfg.c_str());
+        fi.open(file_cfg);
         if (!fi) {
             std::cout << "erreur ouverture mesh colors" << endl;
         }
