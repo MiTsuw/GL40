@@ -2,17 +2,22 @@
 #define INTERFACUI_H
 //***************************************************************************
 //
-// Jean-Charles CREPUT, Abdelkhalek MANSOURI
+// Ahmet IMRE, Barbara SCHIAVI, Constantin JEAN, Victor GABRIEL
 //
 //***************************************************************************
 
+#include <QDesktopWidget>
 #include <QtCore/QVariant>
 #include <QAction>
 #include <QApplication>
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QGroupBox>
-
+#include <QDialog>
+#include <QToolBar>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QMenu>
 #include <QGridLayout>
 #include <QHeaderView>
 #include <QPushButton>
@@ -27,8 +32,22 @@
 
 class Ui_MainWindow
 {
+protected:
+    QTime m_timer;
+    int m_frameCount;
 
 public:
+    QMenuBar* menuBar;
+    QToolBar* toolBar;
+    QStatusBar* statusBar;
+    string curPix;          // Image actuellement visualisé
+    QMenu* lpModeMenu;      // Menu Mode Leap Motion
+    QMenu* aboutMenu;       // Menu A propos
+
+    QAction * quitApp;
+    QAction * zoomIn;
+    QAction * zoomOut;
+
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QFrame *frame;
@@ -40,9 +59,17 @@ public:
 
     void setupUi(QMainWindow *MainWindow)
     {
+        int largeur = QApplication::desktop()->width();
+        int hauteur = QApplication::desktop()->height();
+
+        createMenus(MainWindow);
+        createToolBar(MainWindow);
+        createStatusBar(MainWindow);
+
+
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString("MainWindow"));
-            MainWindow->resize(1000, 750);
+            MainWindow->resize(largeur, hauteur);
             MainWindow->setAnimated(true);
 
             centralWidget = new QWidget(MainWindow);
@@ -93,14 +120,62 @@ public:
 
         QMetaObject::connectSlotsByName(MainWindow);
     }
+
+    /* Création des Menus */
+    void createMenus(QMainWindow *MainWindow)
+    {
+        menuBar = new QMenuBar();                // On crée la barre de menu
+        MainWindow->setMenuBar(menuBar);
+
+          /* Menu Mode Leap Motion */
+          lpModeMenu = menuBar->addMenu("&Mode Leap Motion");
+          //lpModeMenu->setIcon(QIcon("icones/lpLogo.png"));
+          lpModeMenu->setDisabled(true);
+
+          menuBar->addSeparator();
+
+          /* Menu A propos */
+          aboutMenu = menuBar->addMenu("&A propos");
+          //aboutMenu->setIcon(QIcon("icones/pointInterrogation.png"));
+          //QObject::connect(aboutMenu, SIGNAL(clicked()), this, SLOT(quit()));
+    }
+
+    /* Création des Menus */
+    void createToolBar(QMainWindow *MainWindow)
+    {
+        toolBar = new QToolBar();
+        MainWindow->addToolBar(toolBar);
+        toolBar->setMovable(false);
+        zoomIn = toolBar->addAction(/*QIcon(newpix),*/ "Zoom +");
+        zoomOut = toolBar->addAction(/*QIcon(openpix),*/ "Zoom -");
+        toolBar->addSeparator();
+        quitApp = toolBar->addAction(/*QIcon(quitpix),*/"Quit Application");
+
+//        QObject::connect(zoomIn, SIGNAL(triggered()), this, SLOT(exit()));
+//        QObject::connect(zoomOut, SIGNAL(triggered()), this, SLOT(exit()));
+        //QObject::connect(quitApp, SIGNAL(clicked()), this, SLOT(quit()));
+        //QApplication.connect(quitApp, SIGNAL(clicked()), this, SLOT(quit()));
+   }
+
+    /* Création de la barre de statut */
+    void createStatusBar(QMainWindow *MainWindow)
+    {
+        statusBar = new QStatusBar();
+        MainWindow->setStatusBar(statusBar);
+        /* C'est sensé afficher les fps........... lel ca te mets une petite note de musique */
+        statusBar->showMessage(QString("FPS: %f 72.0f " /*/m_frameCount/(float(m_timer.elapsed())/1000.0f)*/));
+    }
+
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "POPIP Viewer ", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Viewer to infinity and beyond", 0));
     }
+
+
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class MainWindow: public Ui_MainWindow{};
 }
 
 #endif // INTERFACUI_H

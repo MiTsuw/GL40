@@ -16,6 +16,9 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
+#include <QApplication>
+#include <QPushButton>
+
 QT_BEGIN_NAMESPACE
 class QGroupBox;
 class QRadioButton;
@@ -143,6 +146,7 @@ public:
         gridLayout_2->addWidget(displayTRadio, 0, 1, 1, 1);
         gridLayout_2->addWidget(displayPRadio, 1, 0, 1, 1);
         gridLayout_2->addWidget(displayLRadio, 1, 1, 1, 1);
+
 
         twoSidedGroupBox->setTitle(QApplication::translate("MainWindow", "2D-3D", 0));
         view2DEnabledRadio->setText(QApplication::translate("MainWindow", "2D", 0));

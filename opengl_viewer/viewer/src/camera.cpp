@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "math.h"
 #include <iostream>
+#include <QDebug>
 //# include <Windows.h>
 
 #define SQR(x) (x*x)
@@ -85,6 +86,31 @@ CCamera::CCamera()
     target = F3dVector (0.0, 0.0, -10.0);
 
     //Only to be sure:
+    RotatedX = RotatedY = RotatedZ = 0.0;
+}
+
+void CCamera::initCamera()
+{
+    Position.x=0.0;
+    Position.y=0.0;
+    Position.z=0.0;
+
+    ViewDir.x=0.0;
+    ViewDir.y=0.0;
+    ViewDir.z=-1.0;
+
+    RightVector.x=1.0;
+    RightVector.y=0.0;
+    RightVector.z=0.0;
+
+    UpVector.x=0.0;
+    UpVector.y=1.0;
+    UpVector.z=0.0;
+
+    target.x=0.0;
+    target.y=0.0;
+    target.z=-10.0;
+
     RotatedX = RotatedY = RotatedZ = 0.0;
 }
 
@@ -214,3 +240,18 @@ void CCamera::MoveUpward( GLfloat Distance )
 }
 
 
+void CCamera:: keyPressEvent(QKeyEvent* event)
+{
+    qDebug() << "Debug Message";
+    if(event->key() == Qt::Key_Right)
+    {
+        SF3dVector tmp;
+        tmp.x=0.1;
+        tmp.y=0.0;
+        tmp.z=0.0;
+
+        Move(tmp);
+        qDebug() << "Debug Message";
+    }
+
+}

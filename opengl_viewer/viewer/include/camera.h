@@ -7,6 +7,7 @@
 //
 //***************************************************************************
 #include <QGLWidget>
+#include <QKeyEvent>
 //# include <Windows.h>
 #ifndef LINUX
 #include <GL/glu.h>		// Need to include it here because the GL* types are required
@@ -32,7 +33,7 @@ struct SF2dVector
 
 SF3dVector F3dVector ( GLfloat x, GLfloat y, GLfloat z );
 
-class CCamera
+class CCamera : public QWidget
 {
 private:
 
@@ -49,6 +50,7 @@ public:
     void Render ( void );	//executes some glRotates and a glTranslate command
     //Note: You should call glLoadIdentity before using Render
 
+    void initCamera();
     void Move ( SF3dVector Direction );
     void RotateX ( GLfloat Angle );
     void RotateY ( GLfloat Angle );
@@ -60,6 +62,8 @@ public:
     void MoveForward ( GLfloat Distance );
     void MoveUpward ( GLfloat Distance );
     void StrafeRight ( GLfloat Distance );
+
+    void keyPressEvent(QKeyEvent* event);
 
 };
 

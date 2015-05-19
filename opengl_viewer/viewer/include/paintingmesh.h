@@ -55,7 +55,7 @@ public:
         string file_cfg;
         param->readConfigParameter("param_1","fileGrid3DPoints", file_cfg);
 
-        fi.open(file_cfg.c_str());
+        fi.open(file_cfg);
         if (!fi) {
             std::cout << "erreur ouverture mesh" << endl;
         }
@@ -70,7 +70,7 @@ public:
         //    fi.open("./data/result.gridcolors");
 
         param->readConfigParameter("param_1","fileGridOfColors", file_cfg);
-        fi.open(file_cfg.c_str());
+        fi.open(file_cfg);
         if (!fi) {
             std::cout << "erreur ouverture mesh colors" << endl;
         }
@@ -293,6 +293,92 @@ protected:
     {
         emit clicked();
     }
+
+/*////////////////////////////////////////////////////////////////////////*/
+//  Ce que j'ai ajouté (Ahmet)
+/*////////////////////////////////////////////////////////////////////////*/
+void keyPressEvent(QKeyEvent* event)
+{
+    qDebug() << "Debug Message";
+    if(event->key() == Qt::Key_Right)
+    {
+        SF3dVector tmp;
+        tmp.x=0.1;
+        tmp.y=0.0;
+        tmp.z=0.0;
+        camera.Move(tmp);
+
+        updateGL();
+
+        qDebug() << "Debug Message";
+    }
+    else if(event->key() == Qt::Key_Left)
+    {
+        SF3dVector tmp;
+        tmp.x=-0.1;
+        tmp.y=0.0;
+        tmp.z=0.0;
+        camera.Move(tmp);
+
+        updateGL();
+
+        qDebug() << "Debug Message";
+    }
+    else if(event->key() == Qt::Key_Up)
+    {
+        SF3dVector tmp;
+        tmp.x=0.0;
+        tmp.y=0.1;
+        tmp.z=0.0;
+        camera.Move(tmp);
+
+        updateGL();
+
+        qDebug() << "Debug Message";
+    }
+    else if(event->key() == Qt::Key_Down)
+    {
+        SF3dVector tmp;
+        tmp.x=0.0;
+        tmp.y=-0.1;
+        tmp.z=0.0;
+        camera.Move(tmp);
+        updateGL();
+
+        qDebug() << "Debug Message";
+    }
+    else if(event->key() == Qt::Key_Space)
+    {
+        camera.initCamera();
+        updateGL();
+    }
+//*////////////////////////////////////////////////////////////////////////*/
+
+        /*-------------------- Barbara Zoom In +, Zoom Out - ---------------------*/
+
+    else if(event->key() == Qt::Key_Plus)
+    {
+        SF3dVector tmp;
+        tmp.x=0.0;
+        tmp.y=0.0;
+        tmp.z=-0.2;
+        camera.Move(tmp);
+        updateGL();
+    }
+
+    else if(event->key() == Qt::Key_Minus)
+    {
+        SF3dVector tmp;
+        tmp.x=0.0;
+        tmp.y=0.0;
+        tmp.z=0.2;
+        camera.Move(tmp);
+        updateGL();
+    }
+
+        /*------------------------------------------------------------------------*/
+
+}
 
 
 private:
