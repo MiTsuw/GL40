@@ -1,5 +1,4 @@
 #ifndef CAMERA_H
- #ifndef CAMERA_H
 #define CAMERA_H
 //***************************************************************************
 //
@@ -51,7 +50,6 @@ public:
     void Render ( void );	//executes some glRotates and a glTranslate command
     //Note: You should call glLoadIdentity before using Render
     void initCamera();
-    void initCamera();
     void Move ( SF3dVector Direction );
     void RotateX ( GLfloat Angle );
     void RotateY ( GLfloat Angle );
@@ -69,4 +67,3 @@ public:
 };
 
 #endif
-
