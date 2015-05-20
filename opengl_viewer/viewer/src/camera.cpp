@@ -239,6 +239,7 @@ void CCamera::MoveUpward( GLfloat Distance )
     Position = Position + (UpVector*Distance);
 }
 
+//connect(Qt::Key_Right, SIGNAL(clicked()), this, SLOT(updateView()));
 
 void CCamera:: keyPressEvent(QKeyEvent* event)
 {
