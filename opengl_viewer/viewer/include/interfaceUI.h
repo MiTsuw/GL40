@@ -23,6 +23,7 @@
 #include <QPushButton>
 #include <QTabWidget>
 #include <QWidget>
+#include <QMessageBox>
 
 #include "paintingmesh.h"
 #include "paramframe.h"
@@ -30,8 +31,11 @@
 #include "paramframe.h"
 
 
-class Ui_MainWindow
+class Ui_MainWindow : public QWidget
 {
+
+    Q_OBJECT
+
 protected:
     QTime m_timer;
     int m_frameCount;
@@ -56,6 +60,8 @@ public:
     QGridLayout *gridLayout_5;
     PaintingMesh *paintingMesh;
     ParamFrame *paramFrame;
+
+
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -137,7 +143,7 @@ public:
           /* Menu A propos */
           aboutMenu = menuBar->addMenu("&A propos");
           //aboutMenu->setIcon(QIcon("icones/pointInterrogation.png"));
-          //QObject::connect(aboutMenu, SIGNAL(clicked()), this, SLOT(quit()));
+          QObject::connect(aboutMenu, SIGNAL(triggered(QAction *)), this, SLOT(apropos()));
     }
 
     /* Création des Menus */
@@ -149,12 +155,14 @@ public:
         zoomIn = toolBar->addAction(/*QIcon(newpix),*/ "Zoom +");
         zoomOut = toolBar->addAction(/*QIcon(openpix),*/ "Zoom -");
         toolBar->addSeparator();
+        //resetCam = toolBar->addAction(/*QIcon(openpix),*/ "Reset camera");
+        toolBar->addSeparator();
         quitApp = toolBar->addAction(/*QIcon(quitpix),*/"Quit Application");
 
-//        QObject::connect(zoomIn, SIGNAL(triggered()), this, SLOT(exit()));
-//        QObject::connect(zoomOut, SIGNAL(triggered()), this, SLOT(exit()));
-        //QObject::connect(quitApp, SIGNAL(clicked()), this, SLOT(quit()));
-        //QApplication.connect(quitApp, SIGNAL(clicked()), this, SLOT(quit()));
+        //QObject::connect(zoomIn, SIGNAL(triggered()), this, SLOT(zoomInCamera()));
+        //QObject::connect(zoomOut, SIGNAL(triggered()), this, SLOT(zoomOutCamera()));
+        //QObject::connect(resetCam, SIGNAL(clicked()), this, SLOT(resetCamera()))
+        QObject::connect(quitApp, SIGNAL(triggered()), this, SLOT(quitappp()));
    }
 
     /* Création de la barre de statut */
@@ -170,7 +178,18 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Viewer to infinity and beyond", 0));
     }
+private slots:
+    void quitappp()
+    {
+        exit(0);
+    }
 
+    void apropos()
+    {
+        QMessageBox msgBox;
+         msgBox.setText("Le document a été modifié.");
+         msgBox.exec();
+    }
 
 };
 
