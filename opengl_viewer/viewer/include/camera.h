@@ -64,6 +64,7 @@ public:
 
     void keyPressEvent(QKeyEvent* event);
 
+
 };
 
 #endif

@@ -295,7 +295,7 @@ protected:
     }
 
 /*////////////////////////////////////////////////////////////////////////*/
-//  Ce que j'ai ajouté (Ahmet)
+//  Ahmet - translation image sur x, y + Reset Camera (0, 0, 0)
 /*////////////////////////////////////////////////////////////////////////*/
 void keyPressEvent(QKeyEvent* event)
 {
@@ -358,21 +358,13 @@ void keyPressEvent(QKeyEvent* event)
 
     else if(event->key() == Qt::Key_Plus)
     {
-        SF3dVector tmp;
-        tmp.x=0.0;
-        tmp.y=0.0;
-        tmp.z=-0.2;
-        camera.Move(tmp);
+        camera.MoveForward(-0.6);
         updateGL();
     }
 
     else if(event->key() == Qt::Key_Minus)
     {
-        SF3dVector tmp;
-        tmp.x=0.0;
-        tmp.y=0.0;
-        tmp.z=0.2;
-        camera.Move(tmp);
+        camera.MoveForward(0.6);
         updateGL();
     }
 
