@@ -303,7 +303,7 @@ void keyPressEvent(QKeyEvent* event)
     if(event->key() == Qt::Key_Right)
     {
         SF3dVector tmp;
-        tmp.x=0.1;
+        tmp.x=-0.1;
         tmp.y=0.0;
         tmp.z=0.0;
         camera.Move(tmp);
@@ -315,7 +315,7 @@ void keyPressEvent(QKeyEvent* event)
     else if(event->key() == Qt::Key_Left)
     {
         SF3dVector tmp;
-        tmp.x=-0.1;
+        tmp.x=0.1;
         tmp.y=0.0;
         tmp.z=0.0;
         camera.Move(tmp);
@@ -328,7 +328,7 @@ void keyPressEvent(QKeyEvent* event)
     {
         SF3dVector tmp;
         tmp.x=0.0;
-        tmp.y=0.1;
+        tmp.y=-0.1;
         tmp.z=0.0;
         camera.Move(tmp);
 
@@ -340,7 +340,7 @@ void keyPressEvent(QKeyEvent* event)
     {
         SF3dVector tmp;
         tmp.x=0.0;
-        tmp.y=-0.1;
+        tmp.y=0.1;
         tmp.z=0.0;
         camera.Move(tmp);
         updateGL();

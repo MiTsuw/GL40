@@ -51,6 +51,8 @@ public:
     QAction * quitApp;
     QAction * zoomIn;
     QAction * zoomOut;
+    QAction * resetCam;
+    QAction * resetAll;
 
     QWidget *centralWidget;
     QGridLayout *gridLayout;
@@ -155,7 +157,9 @@ public:
         zoomIn = toolBar->addAction(/*QIcon(newpix),*/ "Zoom +");
         zoomOut = toolBar->addAction(/*QIcon(openpix),*/ "Zoom -");
         toolBar->addSeparator();
-        //resetCam = toolBar->addAction(/*QIcon(openpix),*/ "Reset camera");
+        resetCam = toolBar->addAction(/*QIcon(openpix),*/ "Reset camera");
+        toolBar->addSeparator();
+        resetAll = toolBar->addAction(/*QIcon(openpix),*/ "Reset all");
         toolBar->addSeparator();
         quitApp = toolBar->addAction(/*QIcon(quitpix),*/"Quit Application");
 
