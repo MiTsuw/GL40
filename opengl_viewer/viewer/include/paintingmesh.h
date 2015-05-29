@@ -9,6 +9,7 @@
 //***************************************************************************
 
 #include <QtGui>
+#include <QKeyEvent>
 #include <QWidget>
 #include <QGLWidget>
 #include "ConfigParams.h"
@@ -55,7 +56,7 @@ public:
         string file_cfg;
         param->readConfigParameter("param_1","fileGrid3DPoints", file_cfg);
 
-        fi.open(file_cfg);
+        fi.open(file_cfg.c_str());
         if (!fi) {
             std::cout << "erreur ouverture mesh" << endl;
         }
@@ -70,7 +71,7 @@ public:
         //    fi.open("./data/result.gridcolors");
 
         param->readConfigParameter("param_1","fileGridOfColors", file_cfg);
-        fi.open(file_cfg);
+        fi.open(file_cfg.c_str());
         if (!fi) {
             std::cout << "erreur ouverture mesh colors" << endl;
         }
@@ -267,11 +268,26 @@ protected:
 
         if (event->buttons() & Qt::LeftButton) {
             rotateObjectBy(1 * -dy, 1 * -dx, 0);
+
             updateGL();
         } else if (event->buttons() & Qt::RightButton) {
             this->rotateBy(1 * -dy, 1 * dx, 0);
 
             updateGL();
+        }
+
+        //Appui sur la molette afin de faire translater l'image
+        else if(event->buttons() & Qt::MiddleButton)
+        {
+            //qDebug() << "Appui sur la molette de la souris";
+            SF3dVector tmp;
+            tmp.x=-dx;
+            tmp.y=dy;
+            tmp.z=0.0;
+            camera.Move(tmp);
+
+            updateGL();
+
         }
         lastPos = event->pos();
     }
@@ -293,85 +309,82 @@ protected:
     {
         emit clicked();
     }
-
-/*////////////////////////////////////////////////////////////////////////*/
-//  Ahmet - translation image sur x, y + Reset Camera (0, 0, 0)
-/*////////////////////////////////////////////////////////////////////////*/
-void keyPressEvent(QKeyEvent* event)
-{
-    qDebug() << "Debug Message";
-    if(event->key() == Qt::Key_Right)
+    /*////////////////////////////////////////////////////////////////////////*/
+    //  Ce que j'ai ajouté
+    /*////////////////////////////////////////////////////////////////////////*/
+    void keyPressEvent(QKeyEvent* event)
     {
-        SF3dVector tmp;
-        tmp.x=-0.1;
-        tmp.y=0.0;
-        tmp.z=0.0;
-        camera.Move(tmp);
+        if(event->key() == Qt::Key_Right)
+        {
+            SF3dVector tmp;
+            tmp.x=-0.1;
+            tmp.y=0.0;
+            tmp.z=0.0;
+            camera.Move(tmp);
 
-        updateGL();
+            updateGL();
 
-        qDebug() << "Debug Message";
+        }
+        else if(event->key() == Qt::Key_Left)
+        {
+            SF3dVector tmp;
+            tmp.x=0.1;
+            tmp.y=0.0;
+            tmp.z=0.0;
+            camera.Move(tmp);
+
+            updateGL();
+
+        }
+        else if(event->key() == Qt::Key_Up)
+        {
+            SF3dVector tmp;
+            tmp.x=0.0;
+            tmp.y=-0.1;
+            tmp.z=0.0;
+            camera.Move(tmp);
+
+            updateGL();
+
+        }
+        else if(event->key() == Qt::Key_Down)
+        {
+            SF3dVector tmp;
+            tmp.x=0.0;
+            tmp.y=0.1;
+            tmp.z=0.0;
+            camera.Move(tmp);
+
+            updateGL();
+
+        }
+        else if(event->key() == Qt::Key_Space)
+        {
+            camera.initCamera();
+            updateGL();
+
+        }
+
+        //*////////////////////////////////////////////////////////////////////////*/
+
+                /*-------------------- Barbara Zoom In +, Zoom Out - ---------------------*/
+
+            else if(event->key() == Qt::Key_Plus)
+            {
+                camera.MoveForward(-0.6);
+                updateGL();
+            }
+
+            else if(event->key() == Qt::Key_Minus)
+            {
+                camera.MoveForward(0.6);
+                updateGL();
+            }
+
+                /*------------------------------------------------------------------------*/
+
     }
-    else if(event->key() == Qt::Key_Left)
-    {
-        SF3dVector tmp;
-        tmp.x=0.1;
-        tmp.y=0.0;
-        tmp.z=0.0;
-        camera.Move(tmp);
-
-        updateGL();
-
-        qDebug() << "Debug Message";
-    }
-    else if(event->key() == Qt::Key_Up)
-    {
-        SF3dVector tmp;
-        tmp.x=0.0;
-        tmp.y=-0.1;
-        tmp.z=0.0;
-        camera.Move(tmp);
-
-        updateGL();
-
-        qDebug() << "Debug Message";
-    }
-    else if(event->key() == Qt::Key_Down)
-    {
-        SF3dVector tmp;
-        tmp.x=0.0;
-        tmp.y=0.1;
-        tmp.z=0.0;
-        camera.Move(tmp);
-        updateGL();
-
-        qDebug() << "Debug Message";
-    }
-    else if(event->key() == Qt::Key_Space)
-    {
-        camera.initCamera();
-        updateGL();
-    }
-//*////////////////////////////////////////////////////////////////////////*/
-
-        /*-------------------- Barbara Zoom In +, Zoom Out - ---------------------*/
-
-    else if(event->key() == Qt::Key_Plus)
-    {
-        camera.MoveForward(-0.6);
-        updateGL();
-    }
-
-    else if(event->key() == Qt::Key_Minus)
-    {
-        camera.MoveForward(0.6);
-        updateGL();
-    }
-
-        /*------------------------------------------------------------------------*/
-
-}
-
+    //*////////////////////////////////////////////////////////////////////////*/
 
 private:
 
@@ -384,9 +397,13 @@ private:
     }
     void rotateObjectBy(int xAngle, int yAngle, int zAngle)
     {
+
         camera.RotateObjectX(xAngle);
         camera.RotateObjectY(yAngle);
+
         updateGL();
+
+
     }
     void setClearColor(const QColor &color)
     {
