@@ -281,8 +281,8 @@ protected:
         {
             //qDebug() << "Appui sur la molette de la souris";
             SF3dVector tmp;
-            tmp.x=-dx;
-            tmp.y=dy;
+            tmp.x=-dx/50.0;
+            tmp.y=dy/50.0;
             tmp.z=0.0;
             camera.Move(tmp);
 
