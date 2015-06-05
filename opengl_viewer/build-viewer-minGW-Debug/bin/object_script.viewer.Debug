@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\camera.o
+./debug\interfaceui.o
+./debug\paramframe.o
+./debug\ctrlwidget.o
+./debug\paintingmesh.o
+./debug\moc_paramframe.o
+./debug\moc_paintingmesh.o
+./debug\moc_ctrlwidget.o
+./debug\moc_interfaceUI.o
+);
