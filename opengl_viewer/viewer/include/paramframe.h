@@ -34,10 +34,10 @@ private:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_0;
 
-    QRadioButton *view2DEnabledRadio;
-    QRadioButton *view2DDisabledRadio;
-    QRadioButton *colorsEnabledRadio;
-    QRadioButton *colorsDisabledRadio;
+    QPushButton *view2DEnabledButton;
+    QPushButton *view2DDisabledButton;
+    QPushButton *colorsEnabledButton;
+    QPushButton *colorsDisabledButton;
 
     QGroupBox *displayGroupBox;
     QRadioButton *displayMRadio;
@@ -45,8 +45,8 @@ private:
     QRadioButton *displayPRadio;
     QRadioButton *displayLRadio;
     QLabel *label;
-    QVBoxLayout *verticalLayout;
-    QVBoxLayout *verticalLayout_2;
+    QHBoxLayout *horizontalLayout_1;
+    QHBoxLayout *horizontalLayout_2;
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 

@@ -24,21 +24,24 @@ ParamFrame::ParamFrame(QFrame *parent)
     twoSidedGroupBox->setMaximumSize(QSize(180, 80));
     verticalLayout_0->addWidget(twoSidedGroupBox);
 
-    verticalLayout = new QVBoxLayout(twoSidedGroupBox);
-    verticalLayout->setSpacing(6);
-    verticalLayout->setContentsMargins(11, 11, 11, 11);
-    verticalLayout->setObjectName(QString("verticalLayout"));
+    horizontalLayout_1 = new QHBoxLayout(twoSidedGroupBox);
+    horizontalLayout_1->setSpacing(0);
+    horizontalLayout_1->setContentsMargins(11, 11, 11, 11);
+    horizontalLayout_1->setObjectName(QString("horizontalLayout_1"));
 
 
-    view2DEnabledRadio = new QRadioButton(twoSidedGroupBox);
-    view2DEnabledRadio->setObjectName(QString("radioButton"));
+    view2DEnabledButton = new QPushButton(twoSidedGroupBox);
+    view2DEnabledButton->setObjectName(QString("pushButton"));
+    view2DEnabledButton->setCheckable(true);
 
-    view2DDisabledRadio = new QRadioButton(twoSidedGroupBox);
-    view2DDisabledRadio->setObjectName(QString("radioButton_2"));
+    view2DDisabledButton = new QPushButton(twoSidedGroupBox);
+    view2DDisabledButton->setObjectName(QString("pushButton_2"));
+    view2DDisabledButton->setCheckable(true);
+    view2DDisabledButton->setChecked(true);
 
-    view2DEnabledRadio->setChecked(true);
-    verticalLayout->addWidget(view2DEnabledRadio);
-    verticalLayout->addWidget(view2DDisabledRadio);
+    //view2DEnabledButton->setChecked(true);
+    horizontalLayout_1->addWidget(view2DEnabledButton);
+    horizontalLayout_1->addWidget(view2DDisabledButton);
 
     colorsGroupBox = new QGroupBox(parent);
     colorsGroupBox->setObjectName(QString("groupBox_2"));
@@ -46,22 +49,24 @@ ParamFrame::ParamFrame(QFrame *parent)
 
     verticalLayout_0->addWidget(colorsGroupBox);
 
-    verticalLayout_2 = new QVBoxLayout(colorsGroupBox);
-    verticalLayout_2->setSpacing(6);
-    verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-    verticalLayout_2->setObjectName(QString("verticalLayout_2"));
+    horizontalLayout_2 = new QHBoxLayout(colorsGroupBox);
+    horizontalLayout_2->setSpacing(0);
+    horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+    horizontalLayout_2->setObjectName(QString("horizontalLayout_2"));
 
-    colorsEnabledRadio = new QRadioButton(colorsGroupBox);
-    colorsEnabledRadio->setObjectName(QString("radioButton_3"));
-    colorsEnabledRadio->setGeometry(QRect(30, 30, 117, 22));
+    colorsEnabledButton = new QPushButton(colorsGroupBox);
+    colorsEnabledButton->setObjectName(QString("pushButton_3"));
+    colorsEnabledButton->setGeometry(QRect(30, 30, 117, 22));
+    colorsEnabledButton->setCheckable(true);
 
-    colorsDisabledRadio = new QRadioButton(colorsGroupBox);
-    colorsDisabledRadio->setObjectName(QString("radioButton_4"));
-    colorsDisabledRadio->setGeometry(QRect(30, 60, 117, 22));
+    colorsDisabledButton = new QPushButton(colorsGroupBox);
+    colorsDisabledButton->setObjectName(QString("pushButton_4"));
+    colorsDisabledButton->setGeometry(QRect(30, 60, 117, 22));
+    colorsDisabledButton->setCheckable(true);
 
-    colorsEnabledRadio->setChecked(true);
-    verticalLayout_2->addWidget(colorsEnabledRadio);
-    verticalLayout_2->addWidget(colorsDisabledRadio);
+    colorsEnabledButton->setChecked(true);
+    horizontalLayout_2->addWidget(colorsEnabledButton);
+    horizontalLayout_2->addWidget(colorsDisabledButton);
 
     displayGroupBox = new QGroupBox(parent);
     displayGroupBox->setObjectName(QString("groupBox_3"));
@@ -98,11 +103,11 @@ ParamFrame::ParamFrame(QFrame *parent)
 */
 
     twoSidedGroupBox->setTitle(QApplication::translate("MainWindow", "2D-3D", 0));
-    view2DEnabledRadio->setText(QApplication::translate("MainWindow", "2D", 0));
-    view2DDisabledRadio->setText(QApplication::translate("MainWindow", "3D", 0));
+    view2DEnabledButton->setText(QApplication::translate("MainWindow", "2D", 0));
+    view2DDisabledButton->setText(QApplication::translate("MainWindow", "3D", 0));
     colorsGroupBox->setTitle(QApplication::translate("MainWindow", "Colors", 0));
-    colorsEnabledRadio->setText(QApplication::translate("MainWindow", "Enabled", 0));
-    colorsDisabledRadio->setText(QApplication::translate("MainWindow", "Disabled", 0));
+    colorsEnabledButton->setText(QApplication::translate("MainWindow", "Enabled", 0));
+    colorsDisabledButton->setText(QApplication::translate("MainWindow", "Disabled", 0));
     displayGroupBox->setTitle(QApplication::translate("MainWindow", "Display", 0));
     displayMRadio->setText(QApplication::translate("MainWindow", "Mesh", 0));
     displayTRadio->setText(QApplication::translate("MainWindow", "Triangles", 0));
@@ -111,10 +116,10 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->setText(QApplication::translate("MainWindow", "Display parameters", 0));
 
 
-    connect(view2DEnabledRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(view2DDisabledRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(colorsEnabledRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(colorsDisabledRadio, SIGNAL(clicked()), this, SLOT(updateView()));
+    connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
+    connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
+    connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
+    connect(colorsDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
 
     connect(displayMRadio, SIGNAL(clicked()), this, SLOT(updateView()));
     connect(displayTRadio, SIGNAL(clicked()), this, SLOT(updateView()));
@@ -133,15 +138,23 @@ void ParamFrame::setWidgetsLink( PaintingMesh *pme) {
 
 void ParamFrame::updateView()
 {
-    if (view2DEnabledRadio->isChecked()) {
-    } else if (view2DDisabledRadio->isChecked()) {
+    if (QObject::sender() == view2DEnabledButton) {
+        view2DDisabledButton->setChecked(false);
+        view2DEnabledButton->setChecked(true);
+    } else if (QObject::sender()== view2DDisabledButton) {
+        view2DEnabledButton->setChecked(false);
+        view2DDisabledButton->setChecked(true);
     }
 
-    if (colorsEnabledRadio->isChecked()) {
+    if (QObject::sender() == colorsEnabledButton) {
+        colorsDisabledButton->setChecked(false);
+        colorsEnabledButton->setChecked(true);
         pme->modeColors = true;
         pme->makeObject();
         std::cout << "Colors" << endl;
-    } else if (colorsDisabledRadio->isChecked()) {
+    } else if (QObject::sender() == colorsDisabledButton) {
+        colorsEnabledButton->setChecked(false);
+        colorsDisabledButton->setChecked(true);
         pme->modeColors = false;
         pme->makeObject();
         std::cout << "Colors disable" << endl;
@@ -156,3 +169,4 @@ void ParamFrame::updateView()
         pme->modeDisplay = 3;
     }
 }
+
