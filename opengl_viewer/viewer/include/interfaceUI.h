@@ -46,12 +46,27 @@ private:
     string curPix;          // Image actuellement visualisé
     QMenu* lpModeMenu;      // Menu Mode Leap Motion
     QMenu* aboutMenu;       // Menu A propos
+    QMenu *m_file;
+    QMenu *m_edit;
+    QMenu *m_display;
+    QMenu *m_help;
 
-    QAction * quitApp;
+
+    /*QAction * quitApp;
     QAction * zoomIn;
     QAction * zoomOut;
     QAction * resetCam;
-    QAction * resetAll;
+    QAction * resetAll;*/
+
+    QAction *a_close;
+    QAction *a_open;
+    QAction *a_save;
+    QAction *a_cameraReset;
+    QAction *a_about;
+    QAction *a_sclist;
+
+
+
 
     QPushButton * myButton;
 

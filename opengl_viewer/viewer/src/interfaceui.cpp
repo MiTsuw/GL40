@@ -74,18 +74,18 @@
         //QList<QMenu*> menuList;
 
         // ******************** FILE MENU ******************
-        QMenu * m_file = new QMenu("File");
+        m_file = new QMenu("File");
 
-        QAction * a_open = new QAction("&Open",MainWindow);
+        a_open = new QAction("&Open",MainWindow);
         //a_open.setText("Open File");
         a_open->setShortcut(QKeySequence::Open);
         connect(a_open, SIGNAL(triggered()), this, SLOT(open()));
 
-        QAction * a_save = new QAction("&Save",MainWindow);
+        a_save = new QAction("&Save",MainWindow);
         a_save->setShortcut(QKeySequence::Save);
         connect(a_save, SIGNAL(triggered()), this, SLOT(save()));
 
-        QAction * a_close = new QAction("&Close",MainWindow);
+        a_close = new QAction("&Close",MainWindow);
         a_close->setShortcut(QKeySequence::Close);
         connect(a_close, SIGNAL(triggered()), this, SLOT(close()));
 
@@ -94,20 +94,20 @@
         m_file->addAction(a_close);
 
         // ******************** EDIT MENU *****************
-        QMenu * m_edit = new QMenu("Edit");
+        m_edit = new QMenu("Edit");
 
 
 
         // ********************* DISPLAY MENU ***************
-        QMenu * m_display = new QMenu("Display");
-        QAction * a_cameraReset = new QAction("&Reset Camera",MainWindow);
+        m_display = new QMenu("Display");
+        a_cameraReset = new QAction("&Reset Camera",MainWindow);
         m_display->addAction(a_cameraReset);
         connect(a_cameraReset, SIGNAL(triggered()), this, SLOT(cameraReset()));
 
         // ********************* HELP MENU ******************
-        QMenu * m_help = new QMenu("Help");
-        QAction * a_about = new QAction("&About",MainWindow);
-        QAction * a_sclist = new QAction("&Shortcut List",MainWindow);
+        m_help = new QMenu("Help");
+        a_about = new QAction("&About",MainWindow);
+        a_sclist = new QAction("&Shortcut List",MainWindow);
         m_help->addAction(a_about);
         m_help->addAction(a_sclist);
 
@@ -217,12 +217,11 @@
 
     void Ui_MainWindow::close()
     {
-
+        cout<<"jeej"<<endl;
     }
 
     void Ui_MainWindow::cameraReset()
     {
-        /*camera.initCamera();
-   QGLContext::updateGL();*/
+        paintingMesh->reinitCamera();
     }
 

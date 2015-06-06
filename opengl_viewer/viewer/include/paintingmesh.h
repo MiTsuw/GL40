@@ -29,6 +29,7 @@ public:
     ~PaintingMesh();
     void initialize(ConfigParams* cp) ;
     void makeObject();
+
 signals:
 public slots:
 signals:
@@ -46,6 +47,7 @@ protected:
     /*////////////////////////////////////////////////////////////////////////*/
     void keyPressEvent(QKeyEvent* event);
     //*////////////////////////////////////////////////////////////////////////*/
+
 
 private:
 
@@ -88,6 +90,7 @@ private:
 
 public:
     void drawLines(QPainter *qp);
+    void reinitCamera();
 };
 
 
