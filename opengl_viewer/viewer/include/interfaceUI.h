@@ -33,6 +33,7 @@
 #include <QMainWindow>
 #include "camera.h"
 #include <QGLWidget>
+#include "mythread.h"
 
 
 class Ui_MainWindow : public QWidget
@@ -69,7 +70,7 @@ private:
 
 
     QPushButton * myButton;
-
+    QPushButton * btnzoom;
     CCamera camera;
 
     QLabel * lblcoordX;
@@ -112,6 +113,7 @@ public slots:
     void save();
     void close();
     void cameraReset();
+    void zoomauto();
 
 };
 

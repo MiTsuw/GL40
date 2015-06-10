@@ -139,6 +139,7 @@
         lecoordY = new QLineEdit();
         lezoom = new QLineEdit();
         cbLeapMotion = new QCheckBox();
+        btnzoom = new QPushButton("Zoom");
 
         lblcoordX->setText("     X :");
         lblcoordY->setText("     Y :");
@@ -157,6 +158,7 @@
         toolBar->addWidget(lecoordY);
         toolBar->addWidget(lblzoom);
         toolBar->addWidget(lezoom);
+        toolBar->addWidget(btnzoom);
         toolBar->addSeparator();
         toolBar->addWidget(cbLeapMotion);
         toolBar->addWidget(lblLeapMotion);
@@ -172,7 +174,7 @@
         //toolBar->addSeparator();
         //quitApp = toolBar->addAction(/*QIcon(quitpix),*/"Quit Application");
 
-
+        QObject::connect(btnzoom, SIGNAL(clicked()), this, SLOT(zoomauto()));
         //QObject::connect(zoomIn, SIGNAL(triggered()), this, SLOT(zoomInCamera()));
         //QObject::connect(zoomOut, SIGNAL(triggered()), this, SLOT(zoomOutCamera()));
         //QObject::connect(resetCam, SIGNAL(clicked()), this, SLOT(resetCamera()))
@@ -212,6 +214,15 @@
 
     void Ui_MainWindow::save()
     {
+
+    }
+
+    void Ui_MainWindow::zoomauto()
+    {
+        /*MyThread *mt = new MyThread(paintingMesh, 1);
+
+        moveToThread(mt);
+        mt->start();*/
 
     }
 
