@@ -40,10 +40,10 @@ private:
     QPushButton *colorsDisabledButton;
 
     QGroupBox *displayGroupBox;
-    QRadioButton *displayMRadio;
-    QRadioButton *displayTRadio;
-    QRadioButton *displayPRadio;
-    QRadioButton *displayLRadio;
+    QPushButton *displayMButton;
+    QPushButton *displayTButton;
+    QPushButton *displayPButton;
+    QPushButton *displayLButton;
     QLabel *label;
     QHBoxLayout *horizontalLayout_1;
     QHBoxLayout *horizontalLayout_2;
@@ -59,6 +59,7 @@ public:
 private slots:
 
     void updateView();
+    void updateDisplay();
 };
 
 #endif // PARAMFRAME_H
