@@ -2,6 +2,11 @@
 
 ParamFrame::ParamFrame(QFrame *parent)
 {
+
+    btnStartZoom = new QPushButton("Start zoom");
+    btnStopZoom= new QPushButton("Stop zoom");
+    tZoomCamera=new MyThread(this);
+
     verticalLayout_0 = new QVBoxLayout(parent);
     verticalLayout_0->setSpacing(6);
     verticalLayout_0->setContentsMargins(11, 11, 11, 11);
@@ -19,6 +24,9 @@ ParamFrame::ParamFrame(QFrame *parent)
 
     verticalLayout_0->addWidget(label);
 
+    verticalLayout_0->addWidget(btnStartZoom);
+    verticalLayout_0->addWidget(btnStopZoom);
+
     twoSidedGroupBox = new QGroupBox(parent);
     twoSidedGroupBox->setObjectName(QString("groupBox"));
     twoSidedGroupBox->setMaximumSize(QSize(180, 80));
@@ -33,11 +41,13 @@ ParamFrame::ParamFrame(QFrame *parent)
     view2DEnabledButton = new QPushButton(twoSidedGroupBox);
     view2DEnabledButton->setObjectName(QString("pushButton"));
     view2DEnabledButton->setCheckable(true);
+    view2DEnabledButton->setAutoExclusive(true);
 
     view2DDisabledButton = new QPushButton(twoSidedGroupBox);
     view2DDisabledButton->setObjectName(QString("pushButton_2"));
     view2DDisabledButton->setCheckable(true);
     view2DDisabledButton->setChecked(true);
+    view2DDisabledButton->setAutoExclusive(true);
 
     //view2DEnabledButton->setChecked(true);
     horizontalLayout_1->addWidget(view2DEnabledButton);
@@ -58,11 +68,13 @@ ParamFrame::ParamFrame(QFrame *parent)
     colorsEnabledButton->setObjectName(QString("pushButton_3"));
     colorsEnabledButton->setGeometry(QRect(30, 30, 117, 22));
     colorsEnabledButton->setCheckable(true);
+    colorsEnabledButton->setAutoExclusive(true);
 
     colorsDisabledButton = new QPushButton(colorsGroupBox);
     colorsDisabledButton->setObjectName(QString("pushButton_4"));
     colorsDisabledButton->setGeometry(QRect(30, 60, 117, 22));
     colorsDisabledButton->setCheckable(true);
+    colorsDisabledButton->setAutoExclusive(true);
 
     colorsEnabledButton->setChecked(true);
     horizontalLayout_2->addWidget(colorsEnabledButton);
@@ -79,23 +91,31 @@ ParamFrame::ParamFrame(QFrame *parent)
     gridLayout_2->setContentsMargins(11, 11, 11, 11);
     gridLayout_2->setObjectName(QString("gridLayout_2"));
 */
-    displayMRadio = new QRadioButton(displayGroupBox);
-    displayMRadio->setObjectName(QString("radioButton_5"));
-    displayMRadio->setGeometry(QRect(30, 30, 117, 22));
+    displayMButton = new QPushButton(displayGroupBox);
+    displayMButton->setObjectName(QString("pushButton_5"));
+    displayMButton->setGeometry(QRect(30, 30, 117, 22));
+    displayMButton->setCheckable(true);
+    displayMButton->setAutoExclusive(true);
 
-    displayTRadio = new QRadioButton(displayGroupBox);
-    displayTRadio->setObjectName(QString("radioButton_6"));
-    displayTRadio->setGeometry(QRect(30, 60, 117, 22));
+    displayTButton = new QPushButton(displayGroupBox);
+    displayTButton->setObjectName(QString("radioButton_6"));
+    displayTButton->setGeometry(QRect(30, 60, 117, 22));
+    displayTButton->setCheckable(true);
+    displayTButton->setAutoExclusive(true);
 
-    displayPRadio = new QRadioButton(displayGroupBox);
-    displayPRadio->setObjectName(QString("radioButton_7"));
-    displayPRadio->setGeometry(QRect(30, 90, 117, 22));
+    displayPButton = new QPushButton(displayGroupBox);
+    displayPButton->setObjectName(QString("radioButton_7"));
+    displayPButton->setGeometry(QRect(30, 90, 117, 22));
+    displayPButton->setCheckable(true);
+    displayPButton->setAutoExclusive(true);
 
-    displayLRadio = new QRadioButton(displayGroupBox);
-    displayLRadio->setObjectName(QString("radioButton_8"));
-    displayLRadio->setGeometry(QRect(30, 120, 117, 22));
+    displayLButton = new QPushButton(displayGroupBox);
+    displayLButton->setObjectName(QString("radioButton_8"));
+    displayLButton->setGeometry(QRect(30, 120, 117, 22));
+    displayLButton->setCheckable(true);
+    displayLButton->setAutoExclusive(true);
 
-    displayMRadio->setChecked(true);
+    displayMButton->setChecked(true);
     /*gridLayout_2->addWidget(displayMRadio, 0, 0, 1, 1);
     gridLayout_2->addWidget(displayTRadio, 1, 0, 1, 1);
     gridLayout_2->addWidget(displayPRadio, 2, 0, 1, 1);
@@ -109,22 +129,27 @@ ParamFrame::ParamFrame(QFrame *parent)
     colorsEnabledButton->setText(QApplication::translate("MainWindow", "Enabled", 0));
     colorsDisabledButton->setText(QApplication::translate("MainWindow", "Disabled", 0));
     displayGroupBox->setTitle(QApplication::translate("MainWindow", "Display", 0));
-    displayMRadio->setText(QApplication::translate("MainWindow", "Mesh", 0));
-    displayTRadio->setText(QApplication::translate("MainWindow", "Triangles", 0));
-    displayPRadio->setText(QApplication::translate("MainWindow", "Points", 0));
-    displayLRadio->setText(QApplication::translate("MainWindow", "Lines", 0));
+    displayMButton->setText(QApplication::translate("MainWindow", "Mesh", 0));
+    displayTButton->setText(QApplication::translate("MainWindow", "Triangles", 0));
+    displayPButton->setText(QApplication::translate("MainWindow", "Points", 0));
+    displayLButton->setText(QApplication::translate("MainWindow", "Lines", 0));
     label->setText(QApplication::translate("MainWindow", "Display parameters", 0));
 
+
+
+    connect(tZoomCamera, SIGNAL(updateScreen()), this, SLOT(autoSelfZoom()));
+    connect(btnStartZoom, SIGNAL(clicked()), this, SLOT(startZoom()));
+    connect(btnStopZoom, SIGNAL(clicked()), this, SLOT(stopZoom()));
 
     connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(colorsDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
 
-    connect(displayMRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(displayTRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(displayPRadio, SIGNAL(clicked()), this, SLOT(updateView()));
-    connect(displayLRadio, SIGNAL(clicked()), this, SLOT(updateView()));
+    connect(displayMButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
+    connect(displayTButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
+    connect(displayPButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
+    connect(displayLButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
 
 
 
@@ -136,37 +161,54 @@ void ParamFrame::setWidgetsLink( PaintingMesh *pme) {
 }
 
 
-void ParamFrame::updateView()
-{
-    if (QObject::sender() == view2DEnabledButton) {
-        view2DDisabledButton->setChecked(false);
-        view2DEnabledButton->setChecked(true);
-    } else if (QObject::sender()== view2DDisabledButton) {
-        view2DEnabledButton->setChecked(false);
-        view2DDisabledButton->setChecked(true);
+void ParamFrame::updateView(){
+    if (view2DEnabledButton->isChecked()) {
+
+    } else if (view2DDisabledButton->isChecked()) {
+
     }
 
-    if (QObject::sender() == colorsEnabledButton) {
-        colorsDisabledButton->setChecked(false);
-        colorsEnabledButton->setChecked(true);
+    if (colorsEnabledButton->isChecked()) {
         pme->modeColors = true;
         pme->makeObject();
         std::cout << "Colors" << endl;
-    } else if (QObject::sender() == colorsDisabledButton) {
-        colorsEnabledButton->setChecked(false);
-        colorsDisabledButton->setChecked(true);
+    } else if (colorsDisabledButton->isChecked()) {
         pme->modeColors = false;
         pme->makeObject();
         std::cout << "Colors disable" << endl;
     }
-    if (displayMRadio->isChecked()) {
+
+}
+
+void ParamFrame::updateDisplay()
+{
+    if (displayMButton->isChecked()) {
         pme->modeDisplay = 0;
-    } else if (displayTRadio->isChecked()) {
+    } else if (displayTButton->isChecked()) {
         pme->modeDisplay = 1;
-    } else if (displayPRadio->isChecked()) {
+    } else if (displayPButton->isChecked()) {
         pme->modeDisplay = 2;
-    } else if (displayLRadio->isChecked()) {
+    } else if (displayLButton->isChecked()) {
         pme->modeDisplay = 3;
     }
+}
+
+
+
+void ParamFrame::autoSelfZoom()
+{
+    pme->selfZoom();
+}
+
+// actions start et pause
+
+
+void ParamFrame:: startZoom() {
+    tZoomCamera->Stop = false;
+    tZoomCamera->start();
+}
+
+void ParamFrame:: stopZoom() {
+    tZoomCamera->Stop = true;
 }
 

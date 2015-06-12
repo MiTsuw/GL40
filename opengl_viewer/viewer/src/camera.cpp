@@ -89,6 +89,8 @@ CCamera::CCamera()
     RotatedX = RotatedY = RotatedZ = 0.0;
 }
 
+
+
 void CCamera::initCamera()
 {
     Position.x=0.0;

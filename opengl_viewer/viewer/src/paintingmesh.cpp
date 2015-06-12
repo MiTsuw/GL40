@@ -7,6 +7,7 @@ PaintingMesh::PaintingMesh(QWidget *parent) :
     modeDisplay = 0;
     clearColor = Qt::black;//::white;
     lastWheel = 0;
+    camera;
 }
 PaintingMesh::~PaintingMesh()
 {
@@ -547,4 +548,15 @@ void PaintingMesh::drawLines(QPainter *qp)
     pen.setStyle(Qt::DashLine);
     qp->setPen(pen);
     qp->drawLine(20, 80, 250, 80);
+}
+
+void PaintingMesh::reinitCamera()
+{
+    camera.initCamera();
+    updateGL();
+}
+void PaintingMesh::selfZoom()
+{
+    camera.MoveForward(-0.1);
+    updateGL();
 }
