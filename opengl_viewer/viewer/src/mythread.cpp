@@ -1,29 +1,23 @@
 #include "mythread.h"
 
-/*
-
-MyThread:: MyThread(CCamera *c, int m)
-{
-    this->camera=c;
-    this->mode=m;
-}*/
-
-MyThread:: MyThread(PaintingMesh *p, int m)
-{
-    this->pm=p;
-    this->mode=m;
-}
 
 
 void MyThread:: run()
 {
 
-    if(mode==1)
+    while(true)
     {
-        qDebug() << "Appui sur le bouton zoom";
-        //camera->initCamera();
-        pm->reinitCamera();
+        QMutex mutex;
+        // prevent other threads from changing the "Stop" value
+        mutex.lock();
+        if(this->Stop) break;
+        mutex.unlock();
 
+        // emit the signal update screen
+        emit updateScreen();
+
+        // slowdown the rotation, msec
+        this->msleep(50);
 
     }
 }

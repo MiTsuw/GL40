@@ -10,14 +10,22 @@ class MyThread : public QThread
 {
      Q_OBJECT
 private:
-    CCamera *camera;
-    PaintingMesh* pm;
     int mode;
+    QMutex mutex;
+
 public:
+    bool Stop;
     //MyThread(CCamera *c, int m);
-    MyThread(PaintingMesh *p, int m);
+    explicit MyThread(QObject *parent, bool stop=false): QThread(parent), Stop(stop)
+    {
+
+    }
+
 protected:
      void run();
+
+signals:
+     void updateScreen();
 };
 
 

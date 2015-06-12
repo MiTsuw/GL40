@@ -18,6 +18,7 @@
 
 #include <QApplication>
 #include <QPushButton>
+#include "mythread.h"
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -50,6 +51,10 @@ private:
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
+    QPushButton* btnStartZoom;
+    QPushButton* btnStopZoom;
+    MyThread* tZoomCamera;
+
 public:
     explicit ParamFrame(QFrame *parent = 0);
     ~ParamFrame();
@@ -60,6 +65,9 @@ private slots:
 
     void updateView();
     void updateDisplay();
+    void autoSelfZoom();
+    void startZoom();
+    void stopZoom();
 };
 
 #endif // PARAMFRAME_H

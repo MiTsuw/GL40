@@ -555,3 +555,8 @@ void PaintingMesh::reinitCamera()
     camera.initCamera();
     updateGL();
 }
+void PaintingMesh::selfZoom()
+{
+    camera.MoveForward(-0.1);
+    updateGL();
+}

@@ -70,7 +70,6 @@ private:
 
 
     QPushButton * myButton;
-    QPushButton * btnzoom;
     CCamera camera;
 
     QLabel * lblcoordX;

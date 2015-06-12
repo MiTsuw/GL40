@@ -2,6 +2,11 @@
 
 ParamFrame::ParamFrame(QFrame *parent)
 {
+
+    btnStartZoom = new QPushButton("Start zoom");
+    btnStopZoom= new QPushButton("Stop zoom");
+    tZoomCamera=new MyThread(this);
+
     verticalLayout_0 = new QVBoxLayout(parent);
     verticalLayout_0->setSpacing(6);
     verticalLayout_0->setContentsMargins(11, 11, 11, 11);
@@ -18,6 +23,9 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->raise();
 
     verticalLayout_0->addWidget(label);
+
+    verticalLayout_0->addWidget(btnStartZoom);
+    verticalLayout_0->addWidget(btnStopZoom);
 
     twoSidedGroupBox = new QGroupBox(parent);
     twoSidedGroupBox->setObjectName(QString("groupBox"));
@@ -128,6 +136,11 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->setText(QApplication::translate("MainWindow", "Display parameters", 0));
 
 
+
+    connect(tZoomCamera, SIGNAL(updateScreen()), this, SLOT(autoSelfZoom()));
+    connect(btnStartZoom, SIGNAL(clicked()), this, SLOT(startZoom()));
+    connect(btnStopZoom, SIGNAL(clicked()), this, SLOT(stopZoom()));
+
     connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
@@ -178,5 +191,24 @@ void ParamFrame::updateDisplay()
     } else if (displayLButton->isChecked()) {
         pme->modeDisplay = 3;
     }
+}
+
+
+
+void ParamFrame::autoSelfZoom()
+{
+    pme->selfZoom();
+}
+
+// actions start et pause
+
+
+void ParamFrame:: startZoom() {
+    tZoomCamera->Stop = false;
+    tZoomCamera->start();
+}
+
+void ParamFrame:: stopZoom() {
+    tZoomCamera->Stop = true;
 }
 
