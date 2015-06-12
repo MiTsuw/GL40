@@ -91,7 +91,9 @@ private:
 public:
     void drawLines(QPainter *qp);
     void reinitCamera();
+   //Fonction pour les threads
     void selfZoom();
+    void selfRotate();
 };
 
 

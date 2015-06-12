@@ -51,9 +51,17 @@ private:
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
+    //Déclarations des boutons et du thread zoom
     QPushButton* btnStartZoom;
     QPushButton* btnStopZoom;
     MyThread* tZoomCamera;
+
+    //Déclarations des boutons et du thread rotation
+    QPushButton* btnStartRotation;
+    QPushButton* btnStopRotation;
+    MyThread* tRotateCamera;
+
+
 
 public:
     explicit ParamFrame(QFrame *parent = 0);
@@ -65,9 +73,16 @@ private slots:
 
     void updateView();
     void updateDisplay();
+
+    //Fonction pour le thread zoom
     void autoSelfZoom();
     void startZoom();
     void stopZoom();
+
+    //Fonction pour le thread rotate
+    void autoSelfRotate();
+    void startRotate();
+    void stopRotate();
 };
 
 #endif // PARAMFRAME_H
