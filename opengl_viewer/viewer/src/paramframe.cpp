@@ -2,6 +2,18 @@
 
 ParamFrame::ParamFrame(QFrame *parent)
 {
+    //Création des boutons et du thread zoom
+    btnStartZoom = new QPushButton("Start zoom");
+    btnStopZoom= new QPushButton("Stop zoom");
+    tZoomCamera=new MyThread(this);
+
+    //Création des boutons et du thread zoom
+    btnStartRotation = new QPushButton("Start rotation");
+    btnStopRotation= new QPushButton("Stop rotation");
+    tRotateCamera=new MyThread(this);
+
+    sliderZoom=new QSlider(/*Qt::Horizontal*/);
+
     verticalLayout_0 = new QVBoxLayout(parent);
     verticalLayout_0->setSpacing(6);
     verticalLayout_0->setContentsMargins(11, 11, 11, 11);
@@ -18,6 +30,14 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->raise();
 
     verticalLayout_0->addWidget(label);
+
+    //Ajouts des boutons pour les threads
+    verticalLayout_0->addWidget(btnStartZoom);
+    verticalLayout_0->addWidget(btnStopZoom);
+    verticalLayout_0->addWidget(sliderZoom);
+
+    verticalLayout_0->addWidget(btnStartRotation);
+    verticalLayout_0->addWidget(btnStopRotation);
 
     twoSidedGroupBox = new QGroupBox(parent);
     twoSidedGroupBox->setObjectName(QString("groupBox"));
@@ -128,6 +148,16 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->setText(QApplication::translate("MainWindow", "Display parameters", 0));
 
 
+    //On connecte le thread zoom et les boutons qui lui sont liés
+    connect(tZoomCamera, SIGNAL(updateScreen()), this, SLOT(autoSelfZoom()));
+    connect(btnStartZoom, SIGNAL(clicked()), this, SLOT(startZoom()));
+    connect(btnStopZoom, SIGNAL(clicked()), this, SLOT(stopZoom()));
+
+    //On connecte le thread rotate et les boutons qui lui sont liés
+    connect(tRotateCamera, SIGNAL(updateScreen()), this, SLOT(autoSelfRotate()));
+    connect(btnStartRotation, SIGNAL(clicked()), this, SLOT(startRotate()));
+    connect(btnStopRotation, SIGNAL(clicked()), this, SLOT(stopRotate()));
+
     connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
@@ -178,5 +208,36 @@ void ParamFrame::updateDisplay()
     } else if (displayLButton->isChecked()) {
         pme->modeDisplay = 3;
     }
+}
+
+
+//Thread zoom
+void ParamFrame::autoSelfZoom()
+{
+    pme->selfZoom();
+}
+
+void ParamFrame:: startZoom() {
+    tZoomCamera->Stop = false;
+    tZoomCamera->start();
+}
+
+void ParamFrame:: stopZoom() {
+    tZoomCamera->Stop = true;
+}
+
+//Thread zoom
+void ParamFrame::autoSelfRotate()
+{
+    pme->selfRotate();
+}
+
+void ParamFrame:: startRotate() {
+    tRotateCamera->Stop = false;
+    tRotateCamera->start();
+}
+
+void ParamFrame:: stopRotate() {
+    tRotateCamera->Stop = true;
 }
 
