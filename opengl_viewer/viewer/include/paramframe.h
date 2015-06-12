@@ -8,6 +8,7 @@
 //***************************************************************************
 
 #include <QWidget>
+#include <QSlider>
 #include "paintingmesh.h"
 #include <QGroupBox>
 #include <QHeaderView>
@@ -60,6 +61,8 @@ private:
     QPushButton* btnStartRotation;
     QPushButton* btnStopRotation;
     MyThread* tRotateCamera;
+
+    QSlider* sliderZoom;
 
 
 

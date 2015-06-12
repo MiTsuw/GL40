@@ -12,6 +12,8 @@ ParamFrame::ParamFrame(QFrame *parent)
     btnStopRotation= new QPushButton("Stop rotation");
     tRotateCamera=new MyThread(this);
 
+    sliderZoom=new QSlider(/*Qt::Horizontal*/);
+
     verticalLayout_0 = new QVBoxLayout(parent);
     verticalLayout_0->setSpacing(6);
     verticalLayout_0->setContentsMargins(11, 11, 11, 11);
@@ -32,6 +34,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     //Ajouts des boutons pour les threads
     verticalLayout_0->addWidget(btnStartZoom);
     verticalLayout_0->addWidget(btnStopZoom);
+    verticalLayout_0->addWidget(sliderZoom);
 
     verticalLayout_0->addWidget(btnStartRotation);
     verticalLayout_0->addWidget(btnStopRotation);
