@@ -5,8 +5,11 @@ INPUT(
 ./release\paramframe.o
 ./release\ctrlwidget.o
 ./release\paintingmesh.o
+./release\mythread.o
+./release\qrc_ressources.o
 ./release\moc_paramframe.o
 ./release\moc_paintingmesh.o
 ./release\moc_ctrlwidget.o
 ./release\moc_interfaceUI.o
+./release\moc_mythread.o
 );

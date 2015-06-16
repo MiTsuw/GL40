@@ -5,8 +5,11 @@ INPUT(
 ./debug\paramframe.o
 ./debug\ctrlwidget.o
 ./debug\paintingmesh.o
+./debug\mythread.o
+./debug\qrc_ressources.o
 ./debug\moc_paramframe.o
 ./debug\moc_paintingmesh.o
 ./debug\moc_ctrlwidget.o
 ./debug\moc_interfaceUI.o
+./debug\moc_mythread.o
 );
