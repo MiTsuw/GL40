@@ -29,16 +29,4 @@ signals:
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
 #endif // MYTHREAD
-

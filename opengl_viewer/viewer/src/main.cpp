@@ -1,6 +1,5 @@
 #include <QApplication>
 #include <cstdlib>
-
 #include "ctrlwidget.h"
 
 char cfgFile[256];
@@ -27,3 +26,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+
