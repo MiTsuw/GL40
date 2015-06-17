@@ -16,7 +16,7 @@ private:
 public:
     bool Stop;
     //MyThread(CCamera *c, int m);
-    explicit MyThread(QObject *parent, bool stop=false): QThread(parent), Stop(stop)
+    MyThread(QObject *parent = 0, bool stop=false): QThread(parent), Stop(stop)
     {
 
     }

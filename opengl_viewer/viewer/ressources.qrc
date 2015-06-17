@@ -4,5 +4,7 @@
         <file>icons/blackwhiteunchecked.png</file>
         <file>icons/colorchecked.png</file>
         <file>icons/colorunchecked.png</file>
+        <file>icons/play.png</file>
+        <file>icons/stop.png</file>
     </qresource>
 </RCC>

@@ -2,9 +2,17 @@
 
 ParamFrame::ParamFrame(QFrame *parent)
 {
+    //creation des Icones
+
+    playIcon = new QIcon(":/icons/play.png");
+    stopIcon = new QIcon(":/icons/stop.png");
     //Création des boutons et du thread zoom
-    btnStartZoom = new QPushButton("Start zoom");
-    btnStopZoom= new QPushButton("Stop zoom");
+    btnStartZoom = new QPushButton("");
+    btnStartZoom->setIcon(*playIcon);
+    btnStartZoom->setIconSize(QSize(20,20));
+    btnStopZoom= new QPushButton("Stop auto zoom");
+    btnStopZoom->setIcon(*stopIcon);
+    btnStopZoom->setIconSize(QSize(20,20));
     tZoomCamera=new MyThread(this);
 
     //Création des boutons et du thread zoom

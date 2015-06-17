@@ -52,6 +52,9 @@ private:
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
+    QIcon *playIcon;
+    QIcon *stopIcon;
+
     //Déclarations des boutons et du thread zoom
     QPushButton* btnStartZoom;
     QPushButton* btnStopZoom;
