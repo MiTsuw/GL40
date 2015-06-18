@@ -61,7 +61,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     sliderZoom->setMinimum(-9);
     sliderZoom->setMaximum(9);
     sliderZoom->setValue(1);
-    sliderZoom->setVisible(false);
+    //sliderZoom->setVisible(false);
 
     horizontalLayout_3->addWidget(btnStartZoom);
     horizontalLayout_3->addWidget(btnStopZoom);
@@ -300,14 +300,14 @@ void ParamFrame::autoSelfZoom(int v)
 }
 
 void ParamFrame:: startZoom() {
-    sliderZoom->setVisible(true);
+   // sliderZoom->setVisible(true);
     tZoomCamera->Stop = false;
     tZoomCamera->setType(0);
     tZoomCamera->start();
 }
 
 void ParamFrame:: stopZoom() {
-    sliderZoom->setVisible(false);
+   // sliderZoom->setVisible(false);
     tZoomCamera->Stop = true;
 }
 
