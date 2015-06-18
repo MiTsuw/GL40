@@ -32,6 +32,9 @@ class ParamFrame : public QWidget
 
 private:
     QGroupBox *twoSidedGroupBox;
+    QGroupBox *zoomGroupBox;
+    QGroupBox *rotationGroupBox;
+
     QGroupBox *colorsGroupBox;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_0;
@@ -49,6 +52,8 @@ private:
     QLabel *label;
     QHBoxLayout *horizontalLayout_1;
     QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout_3;
+    QHBoxLayout *horizontalLayout_4;
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
@@ -66,7 +71,7 @@ private:
     MyThread* tRotateCamera;
 
     QSlider* sliderZoom;
-
+    QSlider* sliderRotation;
 
 
 public:
@@ -81,12 +86,12 @@ private slots:
     void updateDisplay();
 
     //Fonction pour le thread zoom
-    void autoSelfZoom();
+    void autoSelfZoom(int v);
     void startZoom();
     void stopZoom();
 
     //Fonction pour le thread rotate
-    void autoSelfRotate();
+    void autoSelfRotate(int m);
     void startRotate();
     void stopRotate();
 };
