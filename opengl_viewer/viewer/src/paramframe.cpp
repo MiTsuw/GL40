@@ -2,15 +2,19 @@
 
 ParamFrame::ParamFrame(QFrame *parent)
 {
-
-    btnStartZoom = new QPushButton("Start zoom");
-    btnStopZoom= new QPushButton("Stop zoom");
-    tZoomCamera=new MyThread(this);
-
     verticalLayout_0 = new QVBoxLayout(parent);
     verticalLayout_0->setSpacing(6);
     verticalLayout_0->setContentsMargins(11, 11, 11, 11);
     verticalLayout_0->setObjectName(QString("verticalLayout_0"));
+
+
+
+
+
+    //Création des threads zoom et rotation
+    tZoomCamera=new MyThread(this,0);
+    tRotateCamera=new MyThread(this,1);
+
 
     label = new QLabel(parent);
     label->setObjectName(QString("label"));
@@ -24,8 +28,82 @@ ParamFrame::ParamFrame(QFrame *parent)
 
     verticalLayout_0->addWidget(label);
 
-    verticalLayout_0->addWidget(btnStartZoom);
-    verticalLayout_0->addWidget(btnStopZoom);
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts des boutons pour le zoom
+/*/////////////////////////////////////////////////////////////////////////*/
+
+    //Création du group box pour les boutons de zoom
+    zoomGroupBox = new QGroupBox(parent);
+    zoomGroupBox->setObjectName(QString("groupBoxZoom"));
+    zoomGroupBox->setMaximumSize(QSize(180, 80));
+    verticalLayout_0->addWidget(zoomGroupBox);
+
+
+    //Création du layout
+    horizontalLayout_3 = new QHBoxLayout(zoomGroupBox);
+    horizontalLayout_3->setSpacing(0);
+    horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
+    horizontalLayout_3->setObjectName(QString("horizontalLayout_3"));
+
+    //creation des Icones
+    playIcon = new QIcon(":/icons/play.png");
+    stopIcon = new QIcon(":/icons/stop.png");
+
+    //Création des boutons de zoom
+    btnStartZoom = new QPushButton(*playIcon,"", zoomGroupBox);
+    btnStartZoom->setIconSize(QSize(20,20));
+
+    btnStopZoom= new QPushButton(*stopIcon,"",zoomGroupBox);
+    btnStopZoom->setIconSize(QSize(20,20));
+
+    sliderZoom=new QSlider(/*Qt::Horizontal*/);
+    sliderZoom->setMinimum(-9);
+    sliderZoom->setMaximum(9);
+    sliderZoom->setValue(1);
+    //sliderZoom->setVisible(false);
+
+    horizontalLayout_3->addWidget(btnStartZoom);
+    horizontalLayout_3->addWidget(btnStopZoom);
+    horizontalLayout_3->addWidget(sliderZoom);
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts des boutons pour la rotation
+/*/////////////////////////////////////////////////////////////////////////*/
+
+    //Création du group box pour les boutons de rotations
+    rotationGroupBox = new QGroupBox(parent);
+    rotationGroupBox->setObjectName(QString("groupBoxRotation"));
+    rotationGroupBox->setMaximumSize(QSize(180, 80));
+    verticalLayout_0->addWidget(rotationGroupBox);
+
+
+    //Création du layout
+    horizontalLayout_4 = new QHBoxLayout(rotationGroupBox);
+    horizontalLayout_4->setSpacing(0);
+    horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+    horizontalLayout_4->setObjectName(QString("horizontalLayout_4"));
+
+
+    //Création des boutons et du thread zoom
+    btnStartRotation = new QPushButton(*playIcon,"", rotationGroupBox);
+    btnStartRotation->setIconSize(QSize(20,20));
+
+    btnStopRotation= new QPushButton(*stopIcon,"",rotationGroupBox);
+    btnStopRotation->setIconSize(QSize(20,20));
+
+    sliderRotation=new QSlider(/*Qt::Horizontal*/);
+    sliderRotation->setValue(0);
+    sliderRotation->setMinimum(0);
+    sliderRotation->setMaximum(1);
+
+    horizontalLayout_4->addWidget(btnStartRotation);
+    horizontalLayout_4->addWidget(btnStopRotation);
+    horizontalLayout_4->addWidget(sliderRotation);
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts des boutons 2D-3D
+/*/////////////////////////////////////////////////////////////////////////*/
 
     twoSidedGroupBox = new QGroupBox(parent);
     twoSidedGroupBox->setObjectName(QString("groupBox"));
@@ -53,6 +131,10 @@ ParamFrame::ParamFrame(QFrame *parent)
     horizontalLayout_1->addWidget(view2DEnabledButton);
     horizontalLayout_1->addWidget(view2DDisabledButton);
 
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts des boutons pour la couleur
+/*/////////////////////////////////////////////////////////////////////////*/
     colorsGroupBox = new QGroupBox(parent);
     colorsGroupBox->setObjectName(QString("groupBox_2"));
     colorsGroupBox->setMaximumSize(QSize(180, 80));
@@ -79,6 +161,12 @@ ParamFrame::ParamFrame(QFrame *parent)
     colorsEnabledButton->setChecked(true);
     horizontalLayout_2->addWidget(colorsEnabledButton);
     horizontalLayout_2->addWidget(colorsDisabledButton);
+
+
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts des boutons display
+/*/////////////////////////////////////////////////////////////////////////*/
 
     displayGroupBox = new QGroupBox(parent);
     displayGroupBox->setObjectName(QString("groupBox_3"));
@@ -122,6 +210,8 @@ ParamFrame::ParamFrame(QFrame *parent)
     gridLayout_2->addWidget(displayLRadio, 3, 0, 1, 1);
 */
 
+    rotationGroupBox->setTitle(QApplication::translate("MainWindow", "Rotation", 0));
+    zoomGroupBox->setTitle(QApplication::translate("MainWindow", "Zoom", 0));
     twoSidedGroupBox->setTitle(QApplication::translate("MainWindow", "2D-3D", 0));
     view2DEnabledButton->setText(QApplication::translate("MainWindow", "2D", 0));
     view2DDisabledButton->setText(QApplication::translate("MainWindow", "3D", 0));
@@ -136,10 +226,18 @@ ParamFrame::ParamFrame(QFrame *parent)
     label->setText(QApplication::translate("MainWindow", "Display parameters", 0));
 
 
-
-    connect(tZoomCamera, SIGNAL(updateScreen()), this, SLOT(autoSelfZoom()));
+    //On connecte le thread zoom et les boutons qui lui sont liés
+    connect(tZoomCamera, SIGNAL(updateScreen(int)), this, SLOT(autoSelfZoom(int)));
+    connect(sliderZoom,SIGNAL(valueChanged(int)),tZoomCamera,SLOT(updateSpeed(int)));
     connect(btnStartZoom, SIGNAL(clicked()), this, SLOT(startZoom()));
     connect(btnStopZoom, SIGNAL(clicked()), this, SLOT(stopZoom()));
+
+
+    //On connecte le thread rotate et les boutons qui lui sont liés
+    connect(tRotateCamera, SIGNAL(updateScreen(int)), this, SLOT(autoSelfRotate(int)));
+    connect(sliderRotation,SIGNAL(valueChanged(int)), tRotateCamera, SLOT(updateModeRotation(int)));
+    connect(btnStartRotation, SIGNAL(clicked()), this, SLOT(startRotate()));
+    connect(btnStopRotation, SIGNAL(clicked()), this, SLOT(stopRotate()));
 
     connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
@@ -194,21 +292,39 @@ void ParamFrame::updateDisplay()
 }
 
 
-
-void ParamFrame::autoSelfZoom()
+//Thread zoom
+void ParamFrame::autoSelfZoom(int v)
 {
-    pme->selfZoom();
+    //qDebug()<<"v"<<v<<endl;
+    pme->selfZoom(v);
 }
 
-// actions start et pause
-
-
 void ParamFrame:: startZoom() {
+   // sliderZoom->setVisible(true);
     tZoomCamera->Stop = false;
+    tZoomCamera->setType(0);
     tZoomCamera->start();
 }
 
 void ParamFrame:: stopZoom() {
+   // sliderZoom->setVisible(false);
     tZoomCamera->Stop = true;
+}
+
+//Thread zoom
+void ParamFrame::autoSelfRotate(int m)
+{
+    //qDebug()<<"m"<<m<<endl;
+    pme->selfRotate(m);
+}
+
+void ParamFrame:: startRotate() {
+    tRotateCamera->Stop = false;
+    tRotateCamera->setType(1);
+    tRotateCamera->start();
+}
+
+void ParamFrame:: stopRotate() {
+    tRotateCamera->Stop = true;
 }
 

@@ -555,8 +555,24 @@ void PaintingMesh::reinitCamera()
     camera.initCamera();
     updateGL();
 }
-void PaintingMesh::selfZoom()
+void PaintingMesh::selfZoom(int v)
 {
-    camera.MoveForward(-0.1);
+
+    float speed=(float)v/10;
+    qDebug()<<"speedPme"<<speed<<endl;
+    camera.MoveForward(-speed);
+    updateGL();
+}
+
+void PaintingMesh::selfRotate(int m)
+{
+    int dx ;
+    if(m==0)
+        dx=360;
+    else
+        dx=-360;
+
+    qDebug()<<"pme dx "<<dx<<endl;
+    rotateBy(0, 0, 1 * dx/360);
     updateGL();
 }

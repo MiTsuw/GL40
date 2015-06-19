@@ -8,6 +8,7 @@
 //***************************************************************************
 
 #include <QWidget>
+#include <QSlider>
 #include "paintingmesh.h"
 #include <QGroupBox>
 #include <QHeaderView>
@@ -31,6 +32,9 @@ class ParamFrame : public QWidget
 
 private:
     QGroupBox *twoSidedGroupBox;
+    QGroupBox *zoomGroupBox;
+    QGroupBox *rotationGroupBox;
+
     QGroupBox *colorsGroupBox;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_0;
@@ -48,12 +52,27 @@ private:
     QLabel *label;
     QHBoxLayout *horizontalLayout_1;
     QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout_3;
+    QHBoxLayout *horizontalLayout_4;
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
+    QIcon *playIcon;
+    QIcon *stopIcon;
+
+    //Déclarations des boutons et du thread zoom
     QPushButton* btnStartZoom;
     QPushButton* btnStopZoom;
     MyThread* tZoomCamera;
+
+    //Déclarations des boutons et du thread rotation
+    QPushButton* btnStartRotation;
+    QPushButton* btnStopRotation;
+    MyThread* tRotateCamera;
+
+    QSlider* sliderZoom;
+    QSlider* sliderRotation;
+
 
 public:
     explicit ParamFrame(QFrame *parent = 0);
@@ -65,9 +84,16 @@ private slots:
 
     void updateView();
     void updateDisplay();
-    void autoSelfZoom();
+
+    //Fonction pour le thread zoom
+    void autoSelfZoom(int v);
     void startZoom();
     void stopZoom();
+
+    //Fonction pour le thread rotate
+    void autoSelfRotate(int m);
+    void startRotate();
+    void stopRotate();
 };
 
 #endif // PARAMFRAME_H
