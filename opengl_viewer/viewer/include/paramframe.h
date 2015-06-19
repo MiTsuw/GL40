@@ -80,6 +80,9 @@ private:
     QSlider* sliderZoom;
     QSlider* sliderRotation;
 
+    QPushButton *btnRefresh;
+
+
 
 public:
     explicit ParamFrame(QFrame *parent = 0);
@@ -98,10 +101,16 @@ private slots:
     void startZoom();
     void stopZoom();
 
-    //Fonction pour le thread rotate
+    //Fonction pour le thread rotatecamera
     void autoSelfRotate(int m);
     void startRotate();
     void stopRotate();
+
+
+
+    //Fonction pour rafraichir l'image
+    void refreshCamera();
+
 };
 
 #endif // PARAMFRAME_H

@@ -16,14 +16,15 @@ void MyThread:: run()
         // emit the signal update screen
         if(type==0)
         {
-            qDebug()<<"mode zoom"<<speedZoom<<endl;
+            //qDebug()<<"mode zoom"<<speedZoom<<endl;
             emit updateScreen(speedZoom);
         }
-        else
+        else if(type==1)
         {
-            qDebug()<<"mode rotation"<<modeRotation<<endl;
+           // qDebug()<<"mode rotation"<<modeRotation<<endl;
             emit updateScreen(modeRotation);
         }
+
 
         // slowdown the rotation, msec
         this->msleep(50);
