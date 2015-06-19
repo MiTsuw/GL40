@@ -30,6 +30,7 @@ public:
     void initialize(ConfigParams* cp) ;
     void makeObject();
 
+
 signals:
 public slots:
 signals:

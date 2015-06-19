@@ -68,7 +68,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     horizontalLayout_3->addWidget(sliderZoom);
 
 /*/////////////////////////////////////////////////////////////////////////*/
-//  Ajouts des boutons pour la rotation
+//  Ajouts des boutons pour la rotation de la camera
 /*/////////////////////////////////////////////////////////////////////////*/
 
     //Création du group box pour les boutons de rotations
@@ -100,6 +100,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     horizontalLayout_4->addWidget(btnStartRotation);
     horizontalLayout_4->addWidget(btnStopRotation);
     horizontalLayout_4->addWidget(sliderRotation);
+
 
 /*/////////////////////////////////////////////////////////////////////////*/
 //  Ajouts des boutons 2D-3D
@@ -208,7 +209,12 @@ ParamFrame::ParamFrame(QFrame *parent)
     gridLayout_2->addWidget(displayTRadio, 1, 0, 1, 1);
     gridLayout_2->addWidget(displayPRadio, 2, 0, 1, 1);
     gridLayout_2->addWidget(displayLRadio, 3, 0, 1, 1);
+
+
 */
+
+    btnRefresh=new QPushButton("Refresh");
+    verticalLayout_0->addWidget(btnRefresh);
 
     rotationGroupBox->setTitle(QApplication::translate("MainWindow", "Rotation", 0));
     zoomGroupBox->setTitle(QApplication::translate("MainWindow", "Zoom", 0));
@@ -239,6 +245,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     connect(btnStartRotation, SIGNAL(clicked()), this, SLOT(startRotate()));
     connect(btnStopRotation, SIGNAL(clicked()), this, SLOT(stopRotate()));
 
+
     connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
     connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
@@ -248,6 +255,8 @@ ParamFrame::ParamFrame(QFrame *parent)
     connect(displayTButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
     connect(displayPButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
     connect(displayLButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
+
+    connect(btnRefresh, SIGNAL(clicked()), this, SLOT(refreshCamera()));
 
 
 
@@ -261,6 +270,7 @@ void ParamFrame::setWidgetsLink( PaintingMesh *pme) {
 
 void ParamFrame::updateView(){
     if (view2DEnabledButton->isChecked()) {
+
 
     } else if (view2DDisabledButton->isChecked()) {
 
@@ -327,4 +337,11 @@ void ParamFrame:: startRotate() {
 void ParamFrame:: stopRotate() {
     tRotateCamera->Stop = true;
 }
+
+void ParamFrame:: refreshCamera()
+{
+    pme->reinitCamera();
+
+}
+
 
