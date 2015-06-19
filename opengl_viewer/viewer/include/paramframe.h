@@ -20,6 +20,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include "mythread.h"
+#include "colorthread.h"
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -32,14 +33,23 @@ class ParamFrame : public QWidget
 
 private:
     QGroupBox *twoSidedGroupBox;
+    QGroupBox *zoomGroupBox;
+    QGroupBox *rotationGroupBox;
+
     QGroupBox *colorsGroupBox;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_0;
 
     QPushButton *view2DEnabledButton;
     QPushButton *view2DDisabledButton;
+
+
+    //Color Buttons
+
     QPushButton *colorsEnabledButton;
     QPushButton *colorsDisabledButton;
+    ColorThread colorThread;
+    bool colors;
 
     QGroupBox *displayGroupBox;
     QPushButton *displayMButton;
@@ -49,6 +59,8 @@ private:
     QLabel *label;
     QHBoxLayout *horizontalLayout_1;
     QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout_3;
+    QHBoxLayout *horizontalLayout_4;
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
@@ -66,6 +78,9 @@ private:
     MyThread* tRotateCamera;
 
     QSlider* sliderZoom;
+    QSlider* sliderRotation;
+
+    QPushButton *btnRefresh;
 
 
 
@@ -77,18 +92,25 @@ public:
 
 private slots:
 
-    void updateView();
+    void updateColorView();
     void updateDisplay();
+    void update3DView();
 
     //Fonction pour le thread zoom
-    void autoSelfZoom();
+    void autoSelfZoom(int v);
     void startZoom();
     void stopZoom();
 
-    //Fonction pour le thread rotate
-    void autoSelfRotate();
+    //Fonction pour le thread rotatecamera
+    void autoSelfRotate(int m);
     void startRotate();
     void stopRotate();
+
+
+
+    //Fonction pour rafraichir l'image
+    void refreshCamera();
+
 };
 
 #endif // PARAMFRAME_H

@@ -31,8 +31,7 @@ void PaintingMesh::makeObject()
 
     string file_cfg;
     param->readConfigParameter("param_1","fileGrid3DPoints", file_cfg);
-
-    fi.open(file_cfg.c_str());
+     fi.open(file_cfg.c_str());
     if (!fi) {
         std::cout << "erreur ouverture mesh" << endl;
     }
@@ -555,15 +554,24 @@ void PaintingMesh::reinitCamera()
     camera.initCamera();
     updateGL();
 }
-void PaintingMesh::selfZoom()
+void PaintingMesh::selfZoom(int v)
 {
-    camera.MoveForward(-0.1);
+
+    float speed=(float)v/10;
+   // qDebug()<<"speedPme"<<speed<<endl;
+    camera.MoveForward(-speed);
     updateGL();
 }
 
-void PaintingMesh::selfRotate()
+void PaintingMesh::selfRotate(int m)
 {
-    int dx = 360;
+    int dx ;
+    if(m==0)
+        dx=360;
+    else
+        dx=-360;
+
+    //qDebug()<<"pme dx "<<dx<<endl;
     rotateBy(0, 0, 1 * dx/360);
     updateGL();
 }

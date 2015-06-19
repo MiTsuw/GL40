@@ -30,6 +30,7 @@ public:
     void initialize(ConfigParams* cp) ;
     void makeObject();
 
+
 signals:
 public slots:
 signals:
@@ -92,8 +93,8 @@ public:
     void drawLines(QPainter *qp);
     void reinitCamera();
    //Fonction pour les threads
-    void selfZoom();
-    void selfRotate();
+    void selfZoom(int v);
+    void selfRotate(int m);
 };
 
 
