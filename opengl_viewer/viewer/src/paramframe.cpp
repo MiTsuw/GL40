@@ -8,12 +8,16 @@ ParamFrame::ParamFrame(QFrame *parent)
     verticalLayout_0->setObjectName(QString("verticalLayout_0"));
 
 
-
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Déclaration threads
+/*/////////////////////////////////////////////////////////////////////////*/
 
 
     //Création des threads zoom et rotation
     tZoomCamera=new MyThread(this,0);
     tRotateCamera=new MyThread(this,1);
+
+
 
 
     label = new QLabel(parent);
@@ -239,10 +243,11 @@ ParamFrame::ParamFrame(QFrame *parent)
     connect(btnStartRotation, SIGNAL(clicked()), this, SLOT(startRotate()));
     connect(btnStopRotation, SIGNAL(clicked()), this, SLOT(stopRotate()));
 
-    connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
-    connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
-    connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
-    connect(colorsDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateView()));
+    connect(view2DEnabledButton, SIGNAL(clicked(bool)), this, SLOT(update3DView()));
+    connect(view2DDisabledButton, SIGNAL(clicked(bool)), this, SLOT(update3DView()));
+    connect(colorsEnabledButton, SIGNAL(clicked(bool)), this, SLOT(updateColorView()));
+    connect(colorsDisabledButton, SIGNAL(clicked(bool)), this, SLOT(updateColorView()));
+    //connect(&colorThread, SIGNAL)
 
     connect(displayMButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
     connect(displayTButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
@@ -259,21 +264,33 @@ void ParamFrame::setWidgetsLink( PaintingMesh *pme) {
 }
 
 
-void ParamFrame::updateView(){
+void ParamFrame::updateColorView(){
+
+
+    if (colorsEnabledButton->isChecked()) {
+
+        colors = true;
+        colorThread.updateColors(pme, colors);
+        //pme->modeColors = true;
+        //pme->makeObject();
+        std::cout << "Colors" << endl;
+    } else if (colorsDisabledButton->isChecked()) {
+
+        colors = false;
+        colorThread.updateColors(pme, colors);
+        //pme->modeColors = false;
+        //pme->makeObject();
+        std::cout << "Colors disable" << endl;
+    }
+
+}
+
+void ParamFrame::update3DView(){
+
     if (view2DEnabledButton->isChecked()) {
 
     } else if (view2DDisabledButton->isChecked()) {
 
-    }
-
-    if (colorsEnabledButton->isChecked()) {
-        pme->modeColors = true;
-        pme->makeObject();
-        std::cout << "Colors" << endl;
-    } else if (colorsDisabledButton->isChecked()) {
-        pme->modeColors = false;
-        pme->makeObject();
-        std::cout << "Colors disable" << endl;
     }
 
 }
@@ -289,6 +306,7 @@ void ParamFrame::updateDisplay()
     } else if (displayLButton->isChecked()) {
         pme->modeDisplay = 3;
     }
+    update();
 }
 
 

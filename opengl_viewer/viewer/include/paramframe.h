@@ -20,6 +20,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include "mythread.h"
+#include "colorthread.h"
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -41,8 +42,14 @@ private:
 
     QPushButton *view2DEnabledButton;
     QPushButton *view2DDisabledButton;
+
+
+    //Color Buttons
+
     QPushButton *colorsEnabledButton;
     QPushButton *colorsDisabledButton;
+    ColorThread colorThread;
+    bool colors;
 
     QGroupBox *displayGroupBox;
     QPushButton *displayMButton;
@@ -82,8 +89,9 @@ public:
 
 private slots:
 
-    void updateView();
+    void updateColorView();
     void updateDisplay();
+    void update3DView();
 
     //Fonction pour le thread zoom
     void autoSelfZoom(int v);
