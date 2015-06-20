@@ -305,6 +305,40 @@ ParamFrame::ParamFrame(QFrame *parent)
 }
 ParamFrame::~ParamFrame() {}
 
+void ParamFrame::setAllDisabled()
+{
+    view2DEnabledButton->setEnabled(false);
+    view2DDisabledButton->setEnabled(false);
+    colorsEnabledButton->setEnabled(false);
+    colorsDisabledButton->setEnabled(false);
+    displayMButton->setEnabled(false);
+    displayTButton->setEnabled(false);
+    displayPButton->setEnabled(false);
+    displayLButton->setEnabled(false);
+    btnStartZoom->setEnabled(false);
+    btnStopZoom->setEnabled(false);
+    btnStartRotation->setEnabled(false);
+    btnStopRotation->setEnabled(false);
+    btnRefresh->setEnabled(false);
+}
+
+void ParamFrame::setAllEnabled()
+{
+    view2DEnabledButton->setEnabled(true);
+    view2DDisabledButton->setEnabled(true);
+    colorsEnabledButton->setEnabled(true);
+    colorsDisabledButton->setEnabled(true);
+    displayMButton->setEnabled(true);
+    displayTButton->setEnabled(true);
+    displayPButton->setEnabled(true);
+    displayLButton->setEnabled(true);
+    btnStartZoom->setEnabled(true);
+    btnStopZoom->setEnabled(true);
+    btnStartRotation->setEnabled(true);
+    btnStopRotation->setEnabled(true);
+    btnRefresh->setEnabled(true);
+}
+
 void ParamFrame::setWidgetsLink( PaintingMesh *pme) {
     this->pme = pme;
 }
@@ -514,6 +548,7 @@ void ParamFrame::callPopUp(int x)
 }
 
 void ParamFrame:: startLm() {
+    setAllDisabled();
     callPopUp(1);
     callPopUp(2);
     callPopUp(3);
@@ -524,6 +559,7 @@ void ParamFrame:: startLm() {
 }
 
 void ParamFrame:: stopLm() {
+    setAllEnabled();
     // Remove the sample listener when done
     controller.removeListener(listener);
     tLm->Stop = true;

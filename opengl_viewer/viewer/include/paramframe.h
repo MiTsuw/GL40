@@ -107,6 +107,8 @@ public:
 
     void setWidgetsLink( PaintingMesh *);
     void callPopUp(int x);
+    void setAllDisabled();
+    void setAllEnabled();
 
 private slots:
 
