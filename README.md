@@ -1,26 +1,29 @@
 # GL40
 GL40 Project
+University of Technology of Belfort-Montbéliard, France
 
-Hello and welcome to this wonderful project about a very good 3D camera.
+/////// SUMMARY
 
-
-////// TODO
-
-Avant 20 mai : rapport d’état d’avancement
-
-TP prochaine : apprendre boost et opengl
-
-L’analyse détaillée du projet
-
-Plan de travail
-
-/////// SOUTENANCE
-Soutenance du 15 au 18 juin : 1 rapport les codes sources présentation 5min, démonstration 5 min
+Student project about HMI and perception. We were given an ap on which we had to improve the HMI. We were to study the old interface and design a new one which responded to current standards. We added the Leap Motion as a new peripheral available at use in the app.
+We used Qt with CUDA toolkit, OpenGL and boost as extern librairies.
 
 
-/////// LIBS
+////// KEY WORDS
+
+HMI, design, c++, Qt, Boost, OpenGL, Leap Motion, CUDA
+
+
+
+/////// EXTERN LIBRAIRIES
 
 QT 5
 ToolKit CUDA
 BOOST
 OPENGL
+
+////// CONTRIBUTORS
+
+Ahmet IMRE
+Barbara SCHIAVI
+Constantin JEAN
+Victor GABRIEL
