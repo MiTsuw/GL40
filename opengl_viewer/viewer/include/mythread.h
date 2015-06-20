@@ -36,6 +36,7 @@ public slots:
 
 signals:
      void updateScreen(int);
+     void lmOnFrame();
 
 
 };

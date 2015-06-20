@@ -15,12 +15,15 @@
 #include <QRadioButton>
 #include <QApplication>
 #include <QLabel>
+#include <QPixMap>
 #include <QHBoxLayout>
-
+#include <QMessageBox>
 #include <QApplication>
 #include <QPushButton>
 #include "mythread.h"
 #include "colorthread.h"
+
+#include "leapmotion.h"
 
 QT_BEGIN_NAMESPACE
 class QGroupBox;
@@ -32,9 +35,13 @@ class ParamFrame : public QWidget
     Q_OBJECT
 
 private:
+    QPushButton* btnLM;
+
     QGroupBox *twoSidedGroupBox;
     QGroupBox *zoomGroupBox;
     QGroupBox *rotationGroupBox;
+
+    QGroupBox *lmGroupBox;
 
     QGroupBox *colorsGroupBox;
     QHBoxLayout *horizontalLayout;
@@ -61,6 +68,8 @@ private:
     QHBoxLayout *horizontalLayout_2;
     QHBoxLayout *horizontalLayout_3;
     QHBoxLayout *horizontalLayout_4;
+
+    QHBoxLayout *horizontalLayout_5;
     QGridLayout *gridLayout_2;
     PaintingMesh *pme;
 
@@ -82,6 +91,14 @@ private:
 
     QPushButton *btnRefresh;
 
+    //Déclarations des boutons et du thread rotation
+    QPushButton* btnStartlm;
+    QPushButton* btnStoplm;
+    MyThread* tLm;
+
+/*********************** LEAP MOTION ****************************/
+    Leap::Controller controller;
+    SampleListener listener;
 
 
 public:
@@ -89,6 +106,7 @@ public:
     ~ParamFrame();
 
     void setWidgetsLink( PaintingMesh *);
+    void callPopUp(int x);
 
 private slots:
 
@@ -110,6 +128,11 @@ private slots:
 
     //Fonction pour rafraichir l'image
     void refreshCamera();
+
+
+    void autoLm();
+    void startLm();
+    void stopLm();
 
 };
 

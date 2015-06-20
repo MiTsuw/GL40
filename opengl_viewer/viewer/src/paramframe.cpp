@@ -16,6 +16,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     //Création des threads zoom et rotation
     tZoomCamera=new MyThread(this,0);
     tRotateCamera=new MyThread(this,1);
+    tLm=new MyThread(this,2);
 
 
 
@@ -104,6 +105,36 @@ ParamFrame::ParamFrame(QFrame *parent)
     horizontalLayout_4->addWidget(btnStartRotation);
     horizontalLayout_4->addWidget(btnStopRotation);
     horizontalLayout_4->addWidget(sliderRotation);
+
+
+/*/////////////////////////////////////////////////////////////////////////*/
+//  Ajouts du bouton pour le leap motion
+/*/////////////////////////////////////////////////////////////////////////*/
+
+    //Création du group box pour les boutons de rotations
+    lmGroupBox = new QGroupBox(parent);
+    lmGroupBox->setObjectName(QString("groupBoxlm"));
+    lmGroupBox->setMaximumSize(QSize(180, 80));
+    verticalLayout_0->addWidget(lmGroupBox);
+
+
+    //Création du layout
+    horizontalLayout_5 = new QHBoxLayout(lmGroupBox);
+    horizontalLayout_5->setSpacing(0);
+    horizontalLayout_5->setContentsMargins(11, 11, 11, 11);
+    horizontalLayout_5->setObjectName(QString("horizontalLayout_5"));
+
+
+    //Création des boutons et du thread zoom
+    btnStartlm = new QPushButton(*playIcon,"", lmGroupBox);
+    btnStartlm->setIconSize(QSize(20,20));
+
+    btnStoplm= new QPushButton(*stopIcon,"",lmGroupBox);
+    btnStoplm->setIconSize(QSize(20,20));
+
+
+    horizontalLayout_5->addWidget(btnStartlm);
+    horizontalLayout_5->addWidget(btnStoplm);
 
 
 /*/////////////////////////////////////////////////////////////////////////*/
@@ -220,6 +251,7 @@ ParamFrame::ParamFrame(QFrame *parent)
     btnRefresh=new QPushButton("Refresh");
     verticalLayout_0->addWidget(btnRefresh);
 
+    lmGroupBox->setTitle(QApplication::translate("MainWindow", "Leap motion", 0));
     rotationGroupBox->setTitle(QApplication::translate("MainWindow", "Rotation", 0));
     zoomGroupBox->setTitle(QApplication::translate("MainWindow", "Zoom", 0));
     twoSidedGroupBox->setTitle(QApplication::translate("MainWindow", "2D-3D", 0));
@@ -262,6 +294,11 @@ ParamFrame::ParamFrame(QFrame *parent)
     connect(displayLButton, SIGNAL(clicked()), this, SLOT(updateDisplay()));
 
     connect(btnRefresh, SIGNAL(clicked()), this, SLOT(refreshCamera()));
+
+    //On connecte le thread leap motion et les boutons qui lui sont liés
+    connect(tLm, SIGNAL(lmOnFrame()), this, SLOT(autoLm()));
+    connect(btnStartlm, SIGNAL(clicked()), this, SLOT(startLm()));
+    connect(btnStoplm, SIGNAL(clicked()), this, SLOT(stopLm()));
 
 
 
@@ -323,7 +360,6 @@ void ParamFrame::updateDisplay()
 //Thread zoom
 void ParamFrame::autoSelfZoom(int v)
 {
-    //qDebug()<<"v"<<v<<endl;
     pme->selfZoom(v);
 }
 
@@ -359,7 +395,137 @@ void ParamFrame:: stopRotate() {
 void ParamFrame:: refreshCamera()
 {
     pme->reinitCamera();
-
 }
 
+void ParamFrame:: autoLm() {
+    // Have the sample listener receive events from the controller
+    controller.addListener(listener);
+
+    if(listener.swipeLtoR)
+    {
+       qDebug()<<"clockwiseLock"<<endl;
+       pme->swipeLtoR_fct();
+       listener.swipeLtoR = false;
+    }
+
+    if(listener.swipeRtoL)
+    {
+       qDebug()<<"clockwiseLock"<<endl;
+       pme->swipeRtoL_fct();
+       listener.swipeRtoL = false;
+    }
+
+    if(listener.clockwiseLock)
+    {
+       qDebug()<<"clockwiseLock"<<endl;
+       pme->clockwiseLock_fct();
+       listener.clockwiseLock = false;
+    }
+
+    if(listener.counterClockwiseLock)
+    {
+        qDebug()<<"counterClockwiseLock"<<endl;
+        pme->counterClockwiseLock_fct();
+        listener.counterClockwiseLock = false;
+    }
+
+    if(listener.handPosDown)
+    {
+        qDebug()<<"handPosDown"<<endl;
+        pme->handPosDown_fct();
+        listener.handPosDown = false;
+    }
+
+    if(listener.handPosLeft)
+    {
+        qDebug()<<"handPosLeft"<<endl;
+        pme->handPosLeft_fct();
+        listener.handPosLeft = false;
+    }
+
+    if(listener.handPosRight)
+    {
+        qDebug()<<"handPosRight"<<endl;
+        pme->handPosRight_fct();
+        listener.handPosRight = false;
+    }
+
+    if(listener.handPosUp)
+    {
+        qDebug()<<"handPosUp"<<endl;
+        pme->handPosUp_fct();
+        listener.handPosUp = false;
+    }
+
+        if(listener.keyTapReset)
+        {
+            qDebug()<<"keyTapReset"<<endl;
+            pme->keyTapReset_fct();
+            listener.keyTapReset = false;
+        }
+
+    //qDebug()<<"m"<<endl;
+}
+
+void ParamFrame::callPopUp(int x)
+{
+
+    QPixmap pix1 = ":/icons/Leap_Gesture_Swipe.png";
+    QPixmap pix2 = ":/icons/Leap_Gesture_Circle.png";
+    QPixmap pix3 = ":/icons/fist_by_jnatoli.jpg";
+    QPixmap pix4 = ":/icons/Leap_Gesture_Tap.png";
+
+    QMessageBox information;
+    information.setWindowTitle("Tuto Leap Motion");
+
+    if(x == 1)
+    {
+    information.setText("Zoom in / Zoom out");
+    information.setIconPixmap(pix1);
+    information.setDefaultButton(QMessageBox::Ok);
+    information.show();
+    information.exec();
+    }
+
+    if(x == 2)
+    {
+    information.setText("Rotation on z axis");
+    information.setIconPixmap(pix2);
+    information.setDefaultButton(QMessageBox::Ok);
+    information.show();
+    information.exec();
+    }
+    if(x == 3)
+    {
+    information.setText("Translation on x and y axis");
+    information.setIconPixmap(pix3);
+    information.setDefaultButton(QMessageBox::Ok);
+    information.show();
+    information.exec();
+    }
+    if(x == 4)
+    {
+    information.setText("Reset All");
+    information.setIconPixmap(pix4);
+    information.setDefaultButton(QMessageBox::Ok);
+    information.show();
+    information.exec();
+    }
+}
+
+void ParamFrame:: startLm() {
+    callPopUp(1);
+    callPopUp(2);
+    callPopUp(3);
+    callPopUp(4);
+    tLm->Stop = false;
+    tLm->setType(2);
+    tLm->start();
+}
+
+void ParamFrame:: stopLm() {
+    // Remove the sample listener when done
+    controller.removeListener(listener);
+    tLm->Stop = true;
+}
 

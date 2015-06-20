@@ -24,6 +24,11 @@ void MyThread:: run()
            // qDebug()<<"mode rotation"<<modeRotation<<endl;
             emit updateScreen(modeRotation);
         }
+        else if(type==2)
+        {
+           // qDebug()<<"mode rotation"<<modeRotation<<endl;
+            emit lmOnFrame();
+        }
 
 
         // slowdown the rotation, msec

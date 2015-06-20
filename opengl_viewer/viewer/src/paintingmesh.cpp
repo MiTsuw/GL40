@@ -356,6 +356,82 @@ void PaintingMesh::keyPressEvent(QKeyEvent* event)
 }
 //*////////////////////////////////////////////////////////////////////////*/
 
+/**************************** LEAP MOTION ************************************/
+void PaintingMesh::handPosLeft_fct()
+{
+    SF3dVector tmp;
+    tmp.x=0.1;
+    tmp.y=0.0;
+    tmp.z=0.0;
+    camera.Move(tmp);
+
+    updateGL();
+
+}
+
+void PaintingMesh::handPosRight_fct()
+{
+    SF3dVector tmp;
+    tmp.x=-0.1;
+    tmp.y=0.0;
+    tmp.z=0.0;
+    camera.Move(tmp);
+
+    updateGL();
+
+}
+
+void PaintingMesh::handPosUp_fct()
+{
+    SF3dVector tmp;
+    tmp.x=0.0;
+    tmp.y=-0.1;
+    tmp.z=0.0;
+    camera.Move(tmp);
+
+    updateGL();
+}
+
+void PaintingMesh::handPosDown_fct()
+{
+    SF3dVector tmp;
+    tmp.x=0.0;
+    tmp.y=0.1;
+    tmp.z=0.0;
+    camera.Move(tmp);
+
+    updateGL();
+}
+
+void PaintingMesh::clockwiseLock_fct()
+{
+    rotateBy(0, 0, 1);
+    updateGL();
+}
+
+void PaintingMesh::counterClockwiseLock_fct()
+{
+    rotateBy(0, 0, -1);
+    updateGL();
+}
+
+void PaintingMesh::swipeLtoR_fct()
+{
+    camera.MoveForward(0.6);
+    updateGL();
+}
+
+void PaintingMesh::swipeRtoL_fct()
+{
+    camera.MoveForward(-0.6);
+    updateGL();
+}
+
+void PaintingMesh::keyTapReset_fct()
+{
+    camera.initCamera();
+    updateGL();
+}
 
 void PaintingMesh::rotateBy(int xAngle, int yAngle, int zAngle)
 {

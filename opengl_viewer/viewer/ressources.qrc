@@ -6,5 +6,10 @@
         <file>icons/colorunchecked.png</file>
         <file>icons/play.png</file>
         <file>icons/stop.png</file>
+        <file>icons/fist_by_jnatoli.jpg</file>
+        <file>icons/Leap_Gesture_Circle.png</file>
+        <file>icons/Leap_Gesture_Swipe.png</file>
+        <file>icons/Leap_Gesture_Tap.png</file>
+        <file>icons/death-star.ico</file>
     </qresource>
 </RCC>

@@ -7,7 +7,7 @@ char cfgFile[256];
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    a.setWindowIcon(QIcon(":/icons/death-star.ico"));
     if (argc <= 1)
     {
         cout << argv[0] << " configuration file : default config.cfg" << endl;

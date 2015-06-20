@@ -34,12 +34,14 @@
 #include "camera.h"
 #include <QGLWidget>
 #include "mythread.h"
+#include "leapmotion.h"
 
 
 class Ui_MainWindow : public QWidget
 {
 
     Q_OBJECT
+
 private:
     QMenuBar* menuBar;
     QToolBar* toolBar;
@@ -52,22 +54,12 @@ private:
     QMenu *m_display;
     QMenu *m_help;
 
-
-    /*QAction * quitApp;
-    QAction * zoomIn;
-    QAction * zoomOut;
-    QAction * resetCam;
-    QAction * resetAll;*/
-
     QAction *a_close;
     QAction *a_open;
     QAction *a_save;
     QAction *a_cameraReset;
     QAction *a_about;
     QAction *a_sclist;
-
-
-
 
     QPushButton * myButton;
     CCamera camera;
@@ -90,6 +82,11 @@ private:
     QWidget *Mesh;
     QGridLayout *gridLayout_5;
 
+/******************** LEAP MOTION **********************/
+    Ui_MainWindow *ui;
+
+    Leap::Controller controller;
+    SampleListener* listener;
 
 protected:
     QTime m_timer;

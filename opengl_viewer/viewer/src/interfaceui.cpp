@@ -121,8 +121,6 @@
         menuBar->addMenu(m_display);
         menuBar->addMenu(m_help);
 
-
-        //QObject::connect(aboutMenu, SIGNAL(triggered(QAction *)), this, SLOT(apropos()));
     }
 
     /* Création du toolbar */
@@ -162,22 +160,6 @@
         toolBar->addWidget(cbLeapMotion);
         toolBar->addWidget(lblLeapMotion);
 
-
-
-        //zoomIn = toolBar->addAction(/*QIcon(newpix),*/ "Zoom +");
-        //zoomOut = toolBar->addAction(/*QIcon(openpix),*/ "Zoom -");
-        //toolBar->addSeparator();
-        //resetCam = toolBar->addAction(/*QIcon(openpix),*/ "Reset camera");
-        //toolBar->addSeparator();
-        //resetAll = toolBar->addAction(/*QIcon(openpix),*/ "Reset all");
-        //toolBar->addSeparator();
-        //quitApp = toolBar->addAction(/*QIcon(quitpix),*/"Quit Application");
-
-
-        //QObject::connect(zoomIn, SIGNAL(triggered()), this, SLOT(zoomInCamera()));
-        //QObject::connect(zoomOut, SIGNAL(triggered()), this, SLOT(zoomOutCamera()));
-        //QObject::connect(resetCam, SIGNAL(clicked()), this, SLOT(resetCamera()))
-        //QObject::connect(quitApp, SIGNAL(triggered()), this, SLOT(quitappp()));
     }
 
     /* Création de la barre de statut */
@@ -185,8 +167,7 @@
     {
         statusBar = new QStatusBar();
         MainWindow->setStatusBar(statusBar);
-        /* C'est censé afficher les fps........... lel ca te mets une petite note de musique */
-        statusBar->showMessage(QString("FPS: %f 72.0f " /*/m_frameCount/(float(m_timer.elapsed())/1000.0f)*/));
+        statusBar->showMessage(QString("FPS: 72"/*/m_frameCount/(float(m_timer.elapsed())/1000.0f)*/));
     }
 
     void Ui_MainWindow::retranslateUi(QMainWindow *MainWindow)

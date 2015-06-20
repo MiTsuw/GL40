@@ -16,6 +16,7 @@
 #include "camera.h"
 #include <GridOfNodes.h>
 #include <Node.h>
+#include <math.h>
 
 using namespace components;
 class PaintingMesh : public QGLWidget
@@ -95,6 +96,18 @@ public:
    //Fonction pour les threads
     void selfZoom(int v);
     void selfRotate(int m);
+
+
+    /**************************** LEAP MOTION ************************************/
+    void handPosLeft_fct();
+    void handPosRight_fct();
+    void handPosUp_fct();
+    void handPosDown_fct();
+    void clockwiseLock_fct();
+    void counterClockwiseLock_fct();
+    void swipeLtoR_fct();
+    void swipeRtoL_fct();
+    void keyTapReset_fct();
 };
 
 
