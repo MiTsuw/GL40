@@ -172,7 +172,7 @@
 
     void Ui_MainWindow::retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Viewer to infinity and beyond", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Viewer to LEAP infinity and beyond MOTION", 0));
     }
 
     void Ui_MainWindow::quitappp()
