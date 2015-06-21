@@ -1,7 +1,0 @@
-#!/bin/bash
-#echo ${0}
-#echo $(pwd)
-#echo $(pwd)/${0}
-#echo $(cd "$(dirname "$0")"; pwd)
-./../../../../som_cuda_viewer/release/som_cuda vconfig_venus.cfg
-echo "------------------ Finished ! ------------------"
